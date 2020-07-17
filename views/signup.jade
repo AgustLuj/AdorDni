@@ -1,0 +1,40 @@
+extends ./layout.jade
+block contenido
+	div(class="col-md-6 remove-float center-block big-top-space")
+		form(action="/users",method="POST")
+			div(id="name")
+				label(for="Name") Nombre de la cuenta
+				input(type="text",name="name",placeholder="Name",class="form-control")
+
+			div(id="Username")
+				label(for="Username") Usuario de la cuenta
+				input(type="text",name="username",placeholder="Username",class="form-control")
+
+			div(id="especie")
+				label(for="email") Especie
+				br
+				input(type="checkbox",name="checkbox1",placeholder="Adorni",class="form-control")
+				spam Adorni
+				br
+				input(type="checkbox",name="checkbox2",placeholder="Decano",class="form-control")
+				spam Decano
+				br
+				input(type="checkbox",name="checkbox3",placeholder="Oso",class="form-control")
+				spam Oso
+				br
+				input(type="checkbox",name="checkbox4",placeholder="Masutti",class="form-control")
+				spam Masutti
+				br
+				input(type="checkbox",name="checkbox5",placeholder="Humano",class="form-control")
+				spam Humano
+				br
+				spam Otro 
+				input(type="text",name="otro",placeholder="Otro",class="form-control")
+
+			div(class="row top-space")
+				br
+				div(class="col-xs-12 col-sm-6")
+					input(type="submit",value="Enviar",class="btn btn-info")
+				br
+				div(class="col-xs-12 col-sm-6 text-right")
+					a(href="/login") Ya tengo una cuenta

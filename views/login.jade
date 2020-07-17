@@ -1,0 +1,19 @@
+extends ./layout.jade
+block contenido
+
+	div(class="col-md-6 remove-float center-block big-top-space")
+		form(action="/sessions",method="POST") 	
+			div(id="email")
+				label(for="email") DNI
+				input(type="text",name="DNI",placeholder="DNI",class="form-control")
+			br
+			div(id="password")
+				label(for="email") Numero de proceso
+				input(type="text",name="Proceso",placeholder="Proceso",class="form-control")
+			div(class="row top-space")
+				br
+				div(class="col-xs-12 col-sm-6")
+					input(type="submit",value="Enviar",class="btn btn-info")
+				div(class="col-xs-12 col-sm-6 text-right")
+					a(href="/signup") No tengo cuenta
+		
