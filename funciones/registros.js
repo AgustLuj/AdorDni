@@ -1,9 +1,6 @@
 const excelToJson = require('convert-excel-to-json');
 const fs = require('fs')
 const User = require('../models/users.js').User;
-const result = excelToJson({
-    sourceFile: __dirname+'/Ador.xlsx',
-});
 const Save = ()=>{
     /*result['Respuestas de formulario 1'].forEach(({B,D,C,F,G,E},i) => {
         if(i!=0){
