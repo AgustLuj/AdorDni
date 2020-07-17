@@ -1,6 +1,7 @@
 const express =  require('express');
 const User = require('./models/users.js').User;
 const {Save} = require('./funciones/registros.js');
+const {Simagen} = require('./funciones/imagen.js');
 const bodyParser = require('body-parser')
 const app = express();
 
@@ -92,4 +93,5 @@ const adorni = ()=>{
     })*/
 }
 //adorni();
-Save();
+//Save();
+Simagen();
