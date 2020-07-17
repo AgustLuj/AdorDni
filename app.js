@@ -1,5 +1,4 @@
 const express =  require('express');
-var methodOverride = require("method-override");
 var fs = require("fs-extra");
 const User = require('./models/users.js').User;
 const {Save} = require('./funciones/registros.js');
@@ -9,7 +8,6 @@ const fileUpload = require('express-fileupload')
 const app = express();
 
 app.use(fileUpload())
-app.use(methodOverride("_method"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
