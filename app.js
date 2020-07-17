@@ -27,31 +27,35 @@ app.post('/login',(req,res)=>{
     let {dni} = req.body
     if(dni != null){
         User.findOne({'dni':dni},(err,user)=>{
-            try{
-                let foto = req.files['archivo']
-                //console.log(req.files['archivo'])
-                let extension = `${user.username}${user.dni}.png`
-                foto.mv(`${__dirname}/funciones/img/${foto.name}`,err => {
-                    if(err){
-                        console.log('fallo?')
-                        return res.redirect('/')  
-                    } 
-                    let dir = `${__dirname}/public/img/`
-                    Simagen(dni,foto.name,extension,dir,(errI,locate)=>{
-                        if(!errI){
-                            fs.unlinkSync(`${__dirname}/funciones/img/${foto.name}`)
-                            res.redirect('/');
-                        }
-                        user.imagen =extension;
-                        user.save(()=>{
-                            res.render('user',{img:`./img/${extension}`})   
-                        })
-                    });
-                    
-                }) 
-            }catch{
-                console.log('Fallo?')
-                res.redirect('/');
+            if(user.imagen !='hholas'){
+                try{
+                    let foto = req.files['archivo']
+                    //console.log(req.files['archivo'])
+                    let extension = `${user.username}${user.dni}.png`
+                    foto.mv(`${__dirname}/funciones/img/${foto.name}`,err => {
+                        if(err){
+                            console.log('fallo?')
+                            return res.redirect('/')  
+                        } 
+                        let dir = `${__dirname}/public/img/`
+                        Simagen(dni,foto.name,extension,dir,(errI,locate)=>{
+                            if(!errI){
+                                fs.unlinkSync(`${__dirname}/funciones/img/${foto.name}`)
+                                res.redirect('/');
+                            }
+                            user.imagen =extension;
+                            user.save(()=>{
+                                res.render('user',{img:`./img/${extension}`})   
+                            })
+                        });
+                        
+                    }) 
+                }catch{
+                    console.log('Fallo?')
+                    res.redirect('/');
+                }
+            }else{
+                res.render('user',{img:`./img/${user.imagen}`,'name':user.name,})
             }
         })
     }
