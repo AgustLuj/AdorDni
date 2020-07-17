@@ -2,10 +2,14 @@ extends ./layout.jade
 block contenido
 
 	div(class="col-md-6 remove-float center-block big-top-space")
-		form(action="/sessions",method="POST") 	
+		form(action="/login",method="POST" enctype="multipart/form-data") 	
 			div(id="email")
 				label(for="email") DNI
-				input(type="text",name="DNI",placeholder="DNI",class="form-control")
+				input(type="text",name="dni",placeholder="DNI",class="form-control")
+			br
+			div
+				label(for="archivo") Imagen
+				input(type="file",name="archivo",id="archivo" class="form-control")
 			br
 			div(id="password")
 				label(for="email") Numero de proceso
@@ -16,4 +20,3 @@ block contenido
 					input(type="submit",value="Enviar",class="btn btn-info")
 				div(class="col-xs-12 col-sm-6 text-right")
 					a(href="/signup") No tengo cuenta
-		

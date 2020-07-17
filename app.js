@@ -1,14 +1,20 @@
 const express =  require('express');
+var methodOverride = require("method-override");
+var fs = require("fs-extra");
 const User = require('./models/users.js').User;
 const {Save} = require('./funciones/registros.js');
 const {Simagen} = require('./funciones/imagen.js');
 const bodyParser = require('body-parser')
+const fileUpload = require('express-fileupload')
 const app = express();
 
+app.use(fileUpload())
+app.use(methodOverride("_method"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
 app.set('port', (process.env.PORT || 80));
+
 app.set("view engine","jade");
 app.get("/",(req,res) =>{
 	res.render("index");
@@ -18,6 +24,39 @@ app.get('/login',(req,res)=>{
 })
 app.get('/signup',(req,res)=>{
     res.render("signup");
+})
+app.post('/login',(req,res)=>{
+    let {dni} = req.body
+    if(dni != null){
+        User.findOne({'dni':dni},(err,user)=>{
+            try{
+                let foto = req.files['archivo']
+                //console.log(req.files['archivo'])
+                let extension = `${user.username}${user.dni}.png`
+                foto.mv(`${__dirname}/funciones/img/${foto.name}`,err => {
+                    if(err){
+                        console.log('fallo?')
+                        return res.redirect('/')  
+                    } 
+                    let dir = `${__dirname}/public/img/`
+                    Simagen(dni,foto.name,extension,dir,(errI,locate)=>{
+                        if(!errI){
+                            fs.unlinkSync(`${__dirname}/funciones/img/${foto.name}`)
+                            res.redirect('/');
+                        }
+                        user.imagen =extension;
+                        user.save(()=>{
+                            res.render('user',{img:`./img/${extension}`})   
+                        })
+                    });
+                    
+                }) 
+            }catch{
+                console.log('Fallo?')
+                res.redirect('/');
+            }
+        })
+    }
 })
 app.post('/users',(req,res)=>{
     let adorni,Decano,Oso,Masutti,humano;
