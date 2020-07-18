@@ -2,5 +2,6 @@ node_modules/
 config/
 *.xlsx
 *.png
+*.jpg
 
 
