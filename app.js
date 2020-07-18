@@ -27,7 +27,7 @@ app.post('/login',(req,res)=>{
     let {dni} = req.body
     if(dni != null){
         User.findOne({'dni':dni},(err,user)=>{
-            if(user.imagen !='hholas'){
+            if(user.imagen != 'hholas'){
                 try{
                     let foto = req.files['archivo']
                     //console.log(req.files['archivo'])
@@ -55,6 +55,7 @@ app.post('/login',(req,res)=>{
                     res.redirect('/');
                 }
             }else{
+                console.log('hola?')
                 res.render('user',{img:`./img/${user.imagen}`,'name':user.name,})
             }
         })
