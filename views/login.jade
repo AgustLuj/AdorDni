@@ -1,6 +1,7 @@
 extends ./layout.jade
 block contenido
-
+	h1 Bienvenido
+	h5 Por favor ingrese su Dni sin punto BIEN: (100000) MAl: (100.000)
 	div(class="col-md-6 remove-float center-block big-top-space")
 		form(action="/login",method="POST" enctype="multipart/form-data") 	
 			div(id="email")
@@ -11,12 +12,12 @@ block contenido
 				label(for="archivo") Imagen
 				input(type="file",name="archivo",id="archivo" class="form-control")
 			br
-			div(id="password")
+			//div(id="password")
 				label(for="email") Numero de proceso
 				input(type="text",name="Proceso",placeholder="Proceso",class="form-control")
 			div(class="row top-space")
 				br
 				div(class="col-xs-12 col-sm-6")
 					input(type="submit",value="Enviar",class="btn btn-info")
-				div(class="col-xs-12 col-sm-6 text-right")
+				//div(class="col-xs-12 col-sm-6 text-right")
 					a(href="/signup") No tengo cuenta
