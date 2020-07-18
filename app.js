@@ -47,7 +47,8 @@ app.post('/login',(req,res)=>{
                                 }
                                 user.imagen =extension;
                                 user.save(()=>{
-                                    res.render('user',{img:`./img/${extension}`})   
+                                    let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
+                                    res.render('user',{img:`./img/${extension}`,'info':info})   
                                 })
                             });
                             
