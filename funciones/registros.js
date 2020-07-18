@@ -1,18 +1,18 @@
 const excelToJson = require('convert-excel-to-json');
 const fs = require('fs')
 const User = require('../models/users.js').User;
-const result = excelToJson({
-    sourceFile: __dirname+'/Ador.xlsx',
-});
+/*const result = excelToJson({
+    sourceFile:  __dirname+'/Ador.xlsx'
+});*/
 const Save = ()=>{
-    /*result['Respuestas de formulario 1'].forEach(({B,D,C,F,G,E},i) => {
+    result['Hoja2'].forEach(({B,D,C,F,G,E},i) => {
         if(i!=0){
             let pos =C.indexOf('@')
             let O,adorni,Decano,Oso,Masutti,humano;
             if(pos === 0){
                 C.slice(pos+1);
             }
-            if(G === null){
+            if(G==null){
                 G ="Desconocido"
             }
             if(E != 'Adorni'&&E != 'Oso'&&E != 'Decano'&&E != 'Masutti'&&E != 'humano'){
@@ -45,7 +45,7 @@ const Save = ()=>{
                 genero:F,
                 dni:B,
                 nacimiento:G,
-                seguimiento:`${Math.floor(Math.random() * (9999 - 1200))}-${Math.floor(Math.random() * (9999 - 1200))}`,
+                seguimiento:`${Math.floor(Math.random() * (9999 - 2000))}-${Math.floor(Math.random() * (9999 - 1200))}`,
                 imagen:'hholas'
             });
             user.save(function (err) {
@@ -54,8 +54,8 @@ const Save = ()=>{
                 }	
             })
         }
-    });*/
-    User.find((err, user)=> {
+    });
+    /*User.find((err, user)=> {
         if (err) return console.error(err);
         user.forEach(e=>{
             if (e.nacimiento == null){
@@ -66,7 +66,7 @@ const Save = ()=>{
                   });
             }
         })       
-      });
+      });*/
 }
 module.exports= {
     Save

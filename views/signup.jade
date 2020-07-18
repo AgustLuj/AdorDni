@@ -1,17 +1,30 @@
 extends ./layout.jade
 block contenido
 	div(class="col-md-6 remove-float center-block big-top-space")
-		form(action="/users",method="POST")
+		form(action="/users",method="POST" enctype="multipart/form-data")
 			div(id="name")
-				label(for="Name") Nombre de la cuenta
+				label(for="Name") Nombre de la cuenta: 
 				input(type="text",name="name",placeholder="Name",class="form-control")
-
+			br
 			div(id="Username")
-				label(for="Username") Usuario de la cuenta
+				label(for="Username") Usuario de la cuenta: 
 				input(type="text",name="username",placeholder="Username",class="form-control")
-
+			br
+			div
+				label(for="archivo") Imagen: 
+				input(type="file",name="archivo",id="archivo" class="form-control")
+			br
+			div(id="genero")
+				label(for="genero") Genero: 
+				input(type="text",name="genero",placeholder="genero",class="form-control")
+			br
+			div(id="nacimiento")
+				label(for="genero") Nacimiento (opcional): 
+				input(type="text",name="nac",placeholder="Dia",class="form-control")
+				input(type="text",name="nac",placeholder="Mes",class="form-control")
+			br
 			div(id="especie")
-				label(for="email") Especie
+				label(for="email") Especie: 
 				br
 				input(type="checkbox",name="checkbox1",placeholder="Adorni",class="form-control")
 				spam Adorni
@@ -30,7 +43,7 @@ block contenido
 				br
 				spam Otro 
 				input(type="text",name="otro",placeholder="Otro",class="form-control")
-
+			br
 			div(class="row top-space")
 				br
 				div(class="col-xs-12 col-sm-6")
