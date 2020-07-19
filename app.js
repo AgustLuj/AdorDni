@@ -30,9 +30,8 @@ app.post('/login',(req,res)=>{
     if(dni != null){
         User.findOne({'dni':dni},(err,user)=>{
             if(user.verificado){
-                try{
-                    //console.log(user.imagen)
-                    if(user.imagen === 'hholas' || typeof req.files['archivo'] != undefined){
+                try{ 
+                    if(user.imagen === 'hholas' || req.files['archivo'] != null){
                         try{
                             let foto = req.files['archivo']
                             //console.log(req.files['archivo'])
@@ -51,7 +50,7 @@ app.post('/login',(req,res)=>{
                                     user.imagen = extension;
                                     user.save(()=>{
                                         let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
-                                        res.render('user',{img:`./img/${extension}`,'info':info})   
+                                        res.render('user',{img:`./img/${extension}`,'info':info,'authorised':true})   
                                     })
                                 });
                                 
@@ -62,14 +61,15 @@ app.post('/login',(req,res)=>{
                         }
                     }else{
                         let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
-                        res.render('user',{img:`./img/${user.imagen}`,'info':info})
+                        res.render('user',{img:`./img/${user.imagen}`,'info':info,'authorised':true})
                     }
                 }catch{
-                    res.redirect('/')
+                    let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
+                        res.render('user',{img:`./img/${user.imagen}`,'info':info,'authorised':true})
                 }
             }else{
                 let info = `hola ${user.name} lo siento todavia usted no esta verificado porfavor hablar con @0Aliadorni `
-                res.render('user',{'info':info,'img':false})
+                res.render('user',{'info':info,'authorised':false})
             }
         })
     }
