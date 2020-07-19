@@ -1,5 +1,5 @@
 const express =  require('express');
-var fs = require("fs-extra");
+const fs = require("fs-extra");
 const User = require('./models/users.js').User;
 const {Save} = require('./funciones/registros.js');
 const {Simagen} = require('./funciones/imagen.js');
@@ -12,9 +12,10 @@ app.use(fileUpload())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
-app.set('port', (process.env.PORT || 80));
 
+app.set('port', (process.env.PORT || 80));
 app.set("view engine","jade");
+
 app.get("/",(req,res) =>{
 	res.render("index");
 });
@@ -30,42 +31,37 @@ app.post('/login',(req,res)=>{
     if(dni != null){
         User.findOne({'dni':dni},(err,user)=>{
             if(user.verificado){
-                try{ 
-                    if(user.imagen === 'hholas' || req.files['archivo'] != null){
-                        try{
-                            let foto = req.files['archivo']
-                            //console.log(req.files['archivo'])
-                            let extension = `${user.username}${user.dni}.png`
-                            foto.mv(`${__dirname}/funciones/img/${foto.name}`,err => {
-                                if(err){
-                                    console.log('fallo?')
-                                    return res.redirect('/')  
-                                } 
-                                let dir = `${__dirname}/public/img/`
-                                Simagen(dni,foto.name,extension,dir,(errI,locate)=>{
-                                    if(!errI){
-                                        fs.unlinkSync(`${__dirname}/funciones/img/${foto.name}`)
-                                        res.redirect('/');
-                                    }
-                                    user.imagen = extension;
-                                    user.save(()=>{
-                                        let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
-                                        res.render('user',{img:`./img/${extension}`,'info':info,'authorised':true})   
-                                    })
-                                });
-                                
-                            }) 
-                        }catch{
-                            console.log('Fallo?')
-                            res.redirect('/');
-                        }
-                    }else{
-                        let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
-                        res.render('user',{img:`./img/${user.imagen}`,'info':info,'authorised':true})
+                if(user.imagen === 'hholas' || null !== req.files){
+                    try{
+                        let foto = req.files['archivo']
+                        //console.log(req.files['archivo'])
+                        let extension = `${user.username}${user.dni}.png`
+                        foto.mv(`${__dirname}/funciones/img/${foto.name}`,err => {
+                            if(err){
+                                console.log('fallo?')
+                                return res.redirect('/')  
+                            } 
+                            let dir = `${__dirname}/public/img/`
+                            Simagen(dni,foto.name,extension,dir,(errI,locate)=>{
+                                if(!errI){
+                                    fs.unlinkSync(`${__dirname}/funciones/img/${foto.name}`)
+                                    res.redirect('/');
+                                }
+                                user.imagen = extension;
+                                user.save(()=>{
+                                    let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
+                                    res.render('user',{img:`./img/${extension}`,'info':info,'authorised':true})   
+                                })
+                            });
+                            
+                        }) 
+                    }catch{
+                        console.log('Fallo?')
+                        res.redirect('/');
                     }
-                }catch{
-                    let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
-                        res.render('user',{img:`./img/${user.imagen}`,'info':info,'authorised':true})
+                }else{
+                    let info = `hola ${user.name} descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
+                    res.render('user',{img:`./img/${user.imagen}`,'info':info,'authorised':true})
                 }
             }else{
                 let info = `hola ${user.name} lo siento todavia usted no esta verificado porfavor hablar con @0Aliadorni `
