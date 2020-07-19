@@ -2,4 +2,5 @@ extends ./layout.jade
 block contenido
     h1 #{info}
 
-    img.className#IdName(src="#{img}" alt="Image Title")
+    if authorised
+        img.className#IdName(src="#{img}" alt="Image Title")
