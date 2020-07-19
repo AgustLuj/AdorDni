@@ -29,10 +29,10 @@ app.post('/login',(req,res)=>{
     //console.log(req.files['archivo']);
     if(dni != null){
         User.findOne({'dni':dni},(err,user)=>{
-            if(user.verificacion){
+            if(user.verificado){
                 try{
                     //console.log(user.imagen)
-                    if(user.imagen === 'hholas'){
+                    if(user.imagen === 'hholas' || typeof req.files['archivo'] != undefined){
                         try{
                             let foto = req.files['archivo']
                             //console.log(req.files['archivo'])
@@ -61,7 +61,6 @@ app.post('/login',(req,res)=>{
                             res.redirect('/');
                         }
                     }else{
-                        console.log(user)
                         let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
                         res.render('user',{img:`./img/${user.imagen}`,'info':info})
                     }
