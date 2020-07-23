@@ -54,10 +54,10 @@ User.findOne({'dni':`${dni}`},(err, user)=> {
                     images.opacity(.15) 
                     loadedImage.composite( images, 0, 0 );
                     loadedImage.write(`${dir}${locate}`);
-                    
+                    fn(true,locate)
         }) 
     }).then(function (font) { 
-        fn(true,locate)
+        
     })
     .catch(function (err) { 
      console.error(err); 
