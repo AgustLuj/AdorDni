@@ -98,15 +98,15 @@ app.listen(app.get('port'), function() {
 });
 const hola = ()=>{
     /*User.find((err, user)=>{
-        user.verificado = false;
+        user.imagen = 'hholas';
         user.save(()=>{
             console.log('hola');
         });
     });*/
     /*User.updateMany(
-        {imagen: 'hholas'}, 
-        {verificado : 'false' },
-        {multi:true},function(err, numberAffected){  
+        {}, 
+        {imagen : 'hholas' },
+        {multi:true},function(err, numberAffected){
         });*/
 }
 //hola();
