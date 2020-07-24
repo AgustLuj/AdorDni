@@ -3,8 +3,8 @@ const fs = require('fs')
 const User = require('../models/users.js').User;
 /*const result = excelToJson({
     sourceFile:  __dirname+'/Ador.xlsx'
-});*/
-const Save = ()=>{
+});
+/*const Save = ()=>{
     result['Hoja2'].forEach(({B,D,C,F,G,E},i) => {
         if(i!=0){
             let pos =C.indexOf('@')
@@ -66,7 +66,26 @@ const Save = ()=>{
                   });
             }
         })       
-      });*/
+      });
+}*/
+const Save = ()=>{
+    let num=1;
+    result['Hoja1'].forEach(({A},i) => {
+        if(i!=0){
+            //console.log(A)
+            /*User.updateOne(
+                a, 
+                {verificado : true },
+                {multi:true},function(err, numberAffected){
+                    if (err) console.log('no existe o no concuerda',a)
+                    console.log('Subido',numberAffected);
+                    num++
+                });*/
+            User.findOneAndUpdate({'username':A}, {'verificado' : true }, (err)=>{
+                if (err) console.log('no existe o no concuerda',a)
+            });
+        }
+    });
 }
 module.exports= {
     Save

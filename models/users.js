@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const {link} = require('../config/config.js');
 
 var Schema=mongoose.Schema;
-
+mongoose.set('useFindAndModify', false);
 mongoose.connect(link,{ useNewUrlParser: true,useUnifiedTopology: true });
 
 var user_schema = new Schema({
