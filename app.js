@@ -103,12 +103,12 @@ const hola = ()=>{
             console.log('hola');
         });
     });*/
-    /*User.updateMany(
+    User.updateMany(
         {}, 
         {imagen : 'hholas' },
         {multi:true},function(err, numberAffected){
-        });*/
+        });
 }
-//hola();
+hola();
 //Simagen();
 //Hola

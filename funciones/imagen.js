@@ -14,9 +14,9 @@ User.findOne({'dni':`${dni}`},(err, user)=> {
             return Jimp.loadFont(Jimp.FONT_SANS_32_BLACK); 
     }) 
     .then(function (font) {
-        loadedImage.print(font, 490, 290, user.username.toString()) 
+        loadedImage.print(font, 490, 290, user.name.toString()) 
             .write(`${dir}${locate}`);        
-        loadedImage.print(font, 490, 405, user.name.toString()) 
+        loadedImage.print(font, 490, 405, user.username.toString()) 
             .write(`${dir}${locate}`);
         loadedImage.print(font, 490, 515, user.genero.toString()) 
             .write(`${dir}${locate}`);
