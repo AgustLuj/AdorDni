@@ -109,6 +109,6 @@ const hola = ()=>{
         {multi:true},function(err, numberAffected){
         });
 }
-hola();
+//hola();
 //Simagen();
 //Hola
