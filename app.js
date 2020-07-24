@@ -30,42 +30,46 @@ app.post('/login',(req,res)=>{
     //console.log(req.files['archivo']);
     if(dni != null){
         User.findOne({'dni':dni},(err,user)=>{
-            if(user.verificado){
-                if(user.imagen === 'hholas' || null !== req.files){
-                    try{
-                        let foto = req.files['archivo']
-                        //console.log(req.files['archivo'])
-                        let extension = `${user.username}${user.dni}.png`
-                        foto.mv(`${__dirname}/funciones/img/${foto.name}`,err => {
-                            if(err){
-                                console.log('fallo?')
-                                return res.redirect('/')  
-                            } 
-                            let dir = `${__dirname}/public/img/`
-                            Simagen(dni,foto.name,extension,dir,(errI,locate)=>{
-                                if(!errI){
-                                    fs.unlinkSync(`${__dirname}/funciones/img/${foto.name}`)
-                                    res.redirect('/');
-                                }
-                                user.imagen = extension;
-                                user.save(()=>{
-                                    let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
-                                    res.render('user',{img:`./img/${extension}`,'info':info,'authorised':true})   
-                                })
-                            });
-                            
-                        }) 
-                    }catch{
-                        console.log('Fallo?')
-                        res.redirect('/');
+            try{
+                if(user.verificado){
+                    if(user.imagen === 'hholas' || null !== req.files){
+                        try{
+                            let foto = req.files['archivo']
+                            //console.log(req.files['archivo'])
+                            let extension = `${user.username}${user.dni}.png`
+                            foto.mv(`${__dirname}/funciones/img/${foto.name}`,err => {
+                                if(err){
+                                    console.log('fallo?')
+                                    return res.redirect('/')  
+                                } 
+                                let dir = `${__dirname}/public/img/`
+                                Simagen(dni,foto.name,extension,dir,(errI,locate)=>{
+                                    if(!errI){
+                                        fs.unlinkSync(`${__dirname}/funciones/img/${foto.name}`)
+                                        res.redirect('/');
+                                    }
+                                    user.imagen = extension;
+                                    user.save(()=>{
+                                        let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
+                                        res.render('user',{img:`./img/${extension}`,'info':info,'authorised':true})   
+                                    })
+                                });
+                                
+                            }) 
+                        }catch{
+                            console.log('Fallo?')
+                            res.redirect('/');
+                        }
+                    }else{
+                        let info = `hola ${user.name} descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
+                        res.render('user',{img:`./img/${user.imagen}`,'info':info,'authorised':true})
                     }
                 }else{
-                    let info = `hola ${user.name} descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
-                    res.render('user',{img:`./img/${user.imagen}`,'info':info,'authorised':true})
+                    let info = `hola ${user.name} lo siento todavia usted no esta verificado porfavor hablar con @0Aliadorni `
+                    res.render('user',{'info':info,'authorised':false})
                 }
-            }else{
-                let info = `hola ${user.name} lo siento todavia usted no esta verificado porfavor hablar con @0Aliadorni `
-                res.render('user',{'info':info,'authorised':false})
+            }catch{
+                console.log(user)
             }
         })
     }
@@ -97,19 +101,18 @@ app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
 const hola = ()=>{
-    /*User.find((err, user)=>{
-        user.imagen = 'hholas';
-        user.save(()=>{
-            console.log('hola');
-        });
-    });*/
+    User.find((err, user)=>{
+        if(typeof user.verificado == undefined){
+            console.log(user)
+        }
+    });
     /*User.updateMany(
         {}, 
         {imagen : 'hholas' },
         {multi:true},function(err, numberAffected){
         });*/
 }
-//hola();
+hola();
 //Simagen();
 //Hola
 //Save()
