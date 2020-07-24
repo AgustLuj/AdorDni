@@ -7,6 +7,8 @@ const {Suser} = require('./funciones/imagen.js');
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const app = express();
+const { readdirSync, statSync } = require('fs')
+const { join } = require('path')
 
 app.use(fileUpload())
 app.use(bodyParser.json());
@@ -98,15 +100,23 @@ app.post('/users',(req,res)=>{
 app.post('/signup',(req,res)=>{
     res.render("signup");
 })
- 
+app.get('/img',()=>{
+    const dirs = p => readdirSync(p).filter(f => statSync(join(p, f)).isDirectory())
+    console.log(dirs);
+})
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
 const hola = ()=>{
+    let sum=0;
     User.find((err, user)=>{
-        if(typeof user.verificado == undefined){
-            console.log(user)
-        }
+        user.forEach(({imagen})=>{
+            if(imagen != 'hholas' ){
+                sum++;
+                
+            }
+        })
+        console.log(sum)
     });
     /*User.updateMany(
         {}, 
@@ -114,7 +124,7 @@ const hola = ()=>{
         {multi:true},function(err, numberAffected){
         });*/
 }
-hola();
+//hola();
 //Simagen();
 //Hola
 //Save()
