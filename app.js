@@ -101,8 +101,9 @@ app.post('/signup',(req,res)=>{
     res.render("signup");
 })
 app.get('/img',()=>{
-    const dirs = p => readdirSync(p).filter(f => statSync(join(p, f)).isDirectory())
-    console.log(dirs());
+    //const isDirectory = source => lstatSync(source).isDirectory()
+    const getDirectories = source =>readdirSync(source).map(name => join(source, name)).filter(isDirectory)
+    console.log(getDirectories())
 })
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
