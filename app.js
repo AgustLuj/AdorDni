@@ -71,6 +71,7 @@ app.post('/login',(req,res)=>{
             }catch{
                 console.log(err)
                 console.log(user)
+                res.redirect('/')
             }
         })
     }
