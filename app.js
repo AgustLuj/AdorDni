@@ -69,6 +69,7 @@ app.post('/login',(req,res)=>{
                     res.render('user',{'info':info,'authorised':false})
                 }
             }catch{
+                console.log(err)
                 console.log(user)
             }
         })
