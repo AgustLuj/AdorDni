@@ -28,10 +28,10 @@ app.get('/signup',(req,res)=>{
     res.render("signup");
 })
 app.post('/login',(req,res)=>{
-    let {dni} = req.body
+    let {dni,username} = req.body
     //console.log(req.files['archivo']);
     if(dni != null){
-        User.findOne({'dni':dni},(err,user)=>{
+        User.findOne({'dni':dni,'username':username},(err,user)=>{
             try{
                 if(user.verificado){
                     if(user.imagen === 'hholas' || null !== req.files){
