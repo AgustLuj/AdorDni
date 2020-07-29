@@ -6,14 +6,20 @@ const {Simagen} = require('./funciones/imagen.js');
 const {Suser} = require('./funciones/imagen.js');
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
+const session = require('express-session')
+
 const app = express();
-const { readdirSync, statSync } = require('fs')
-const { join } = require('path')
 
 app.use(fileUpload())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
+
+app.use(session({
+    secret: 'QueondaMaquinatodobienMealegroMucho123456789',
+    resave: false,
+    saveUninitialized: true,
+  }))
 
 app.set('port', (process.env.PORT || 80));
 app.set("view engine","jade");
@@ -26,6 +32,9 @@ app.get('/login',(req,res)=>{
 })
 app.get('/signup',(req,res)=>{
     res.render("signup");
+})
+app.get('/verificacion/admin',(req,res)=>{
+    res.render('admin');
 })
 app.post('/login',(req,res)=>{
     let {dni,username} = req.body
@@ -77,6 +86,63 @@ app.post('/login',(req,res)=>{
             }
         })
     }
+})
+app.post('/verificacion/admin',(req,res)=>{
+    let {dni, user, seg}= req.body;
+    User.findOne({'dni':dni,'username':user,'seguimiento':seg},(err,user)=>{
+        if(err) throw err;
+        console.log(user);
+        if(null !== user){
+            req.session.admin = true;
+            User.find({'verificado':false},(err,user)=>{
+                let dnis = []
+                user.forEach((e)=>{
+                    dnis.push(e.dni);
+                })
+                //console.log(dnis)
+                res.render('userVer',{'items':dnis});
+            })
+        }else{
+            res.render('admin');
+        }
+    })
+})
+app.post('/verificacion/admin/dni',(req,res)=>{
+    if(req.session.admin){
+        let {dni}= req.body;
+        console.log(req.body)
+        User.findOne({'dni':dni},(err,user)=>{
+            if(null !== user){
+                if(!user.verificado){
+                    user.verificado = true;
+                    user.save(()=>{
+                        console.log('okey')
+                        req.session.destroy()
+                        res.write('ok')
+                        
+                    })
+                }else{
+                    res.redirect('/verificacion/admin')
+                    req.session.destroy()
+                }
+            }else{
+                res.redirect('/verificacion/admin')
+                req.session.destroy()
+            }
+        })
+        /*User.findOneAndUpdate({'dni':dni},{'verificado':true},()=>{
+            console.log('okey')
+            //res.redirect('/verificacion/admin')
+        })*/
+        //
+        
+    }else{
+        res.status(404)
+            .send('Not found');
+    }
+    
+
+    
 })
 app.post('/users',(req,res)=>{
     let a = false

@@ -1,0 +1,22 @@
+extends ./layout.jade
+block contenido
+	h1 Sos admin? no lo creo 
+	h5 Por favor ingrese su Dni sin punto BIEN: (100000) MAl: (100.000)
+	h5 Codigo de seguimiento con el guion (xxxx-xxxx)
+	div(class="col-md-6 remove-float center-block big-top-space")
+		form(action="/verificacion/admin",method="POST" enctype="multipart/form-data") 	
+			div(id="dni")
+				label(for="dni") DNI
+				input(type="text",name="dni",placeholder="DNI",class="form-control")
+			br
+			div(id="username")
+				label(for="username") Username
+				input(type="text",name="user",placeholder="username",class="form-control")
+			br
+			div(id="password")
+				label(for="pass") Numero de seguimiento
+				input(type="text",name="seg",placeholder="Nr° de Seguimiento",class="form-control")
+			div(class="row top-space")
+				br
+				div(class="col-xs-12 col-sm-6")
+					input(type="submit",value="Enviar",class="btn btn-info")
