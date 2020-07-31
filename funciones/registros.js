@@ -6,7 +6,7 @@ const User = require('../models/users.js').User;
     sourceFile:  __dirname+'/Ador.xlsx'
 });
 /*const Save = ()=>{
-    result['Hoja3'].forEach(({B,D,C,F,G,E},i) => {
+    /*result['Hoja3'].forEach(({B,D,C,F,G,E},i) => {
         if(i!=0){
             let pos =C.indexOf('@')
             let O,adorni,Decano,Oso,Masutti,humano;
@@ -17,37 +17,33 @@ const User = require('../models/users.js').User;
                 G ="Desconocido"
             }
             if(E != 'Adorni'&&E != 'Oso'&&E != 'Decano'&&E != 'Masutti'&&E != 'humano'){
-                O = E
+                adorni = E
             }
             if(E === 'Adorni'){
                 adorni= 'Adorni';
             }
             if(E === 'Oso'){
-                Decano= 'Decano';
+                adorni= 'Decano';
             }
             if(E === 'Decano'){
-                Oso= 'Oso';
+                adorni= 'Oso';
             }
             if(E === 'Masutti'){
-                Masutti= 'Masutti';
+                adorni= 'Masutti';
             }
             if(E === 'humano'){
-                humano= 'Humano';
+                adorni= 'Humano';
             }
             let user = new User({        
                 name:D,
                 username:C.slice(pos+1),
                 especie:adorni,
-                especie1:Decano,
-                especie2:Oso,
-                especie3:Masutti,
-                especie4:humano,
-                otro:O,
-                genero:F,
                 dni:B,
+                genero:F,
+                seguimiento:`${Math.floor(Math.random() * (9999 - 2000))}-${Math.floor(Math.random() * (9999 - 2000))}`,
+                imagen:'hholas',
                 nacimiento:G,
-                seguimiento:`${Math.floor(Math.random() * (9999 - 2000))}-${Math.floor(Math.random() * (9999 - 1200))}`,
-                imagen:'hholas'
+                verificado:false
             });
             user.save(function (err) {
                 if(err){
@@ -55,7 +51,7 @@ const User = require('../models/users.js').User;
                 }	
             })
         }
-    });
+    });*/
     /*User.find((err, user)=> {
         if (err) return console.error(err);
         user.forEach(e=>{
@@ -68,14 +64,14 @@ const User = require('../models/users.js').User;
             }
         })       
       });
-}*/
-/*
-const Save = ()=>{
+}
+*/
+/*const Save = ()=>{
     let num=1;
     result['Hoja1'].forEach(({A},i) => {
         if(i!=0){
             //console.log(A)
-            User.updateOne(
+            /*User.updateOne(
                 a, 
                 {verificado : true },
                 {multi:true},function(err, numberAffected){
@@ -92,4 +88,3 @@ const Save = ()=>{
 module.exports= {
     Save
 }*/
-//res.redirect("/login"); 

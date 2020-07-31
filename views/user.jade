@@ -1,6 +1,13 @@
 extends ./layout.jade
 block contenido
     h1 #{info}
-
     if authorised
-        img.className#IdName(src="#{img}" alt="AdorDni")
+        h3 Hay dos fotos una que podes subir y otra no
+        br
+        br
+        h5 Foto Principal (No Publicar Seguimiento == Password)
+            img.className#IdName(src="#{img[0]}" alt="AdorDni")
+        br
+        br 
+        h5 Foto Para subir a las redes
+            img.className#IdName(src="#{img[1]}" alt="AdorDni")

@@ -43,6 +43,7 @@ app.post('/login',(req,res)=>{
         User.findOne({'dni':dni,'username':username},(err,user)=>{
             try{
                 if(user.verificado){
+                    let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
                     if(user.imagen === 'hholas' || null !== req.files){
                         try{
                             let foto = req.files['archivo']
@@ -54,16 +55,22 @@ app.post('/login',(req,res)=>{
                                     return res.redirect('/')  
                                 } 
                                 let dir = `${__dirname}/public/img/`
-                                Simagen(dni,foto.name,extension,dir,(errI,locate)=>{
+                                Simagen(dni,foto.name,extension,true,dir,(errI,locate)=>{
                                     if(!errI){
                                         fs.unlinkSync(`${__dirname}/funciones/img/${foto.name}`)
                                         res.redirect('/');
                                     }
-                                    user.imagen = extension;
-                                    user.save(()=>{
-                                        let info = `hola ${user.name} porfavor descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
-                                        res.render('user',{img:`./img/${extension}`,'info':info,'authorised':true})   
+                                    Simagen(dni,foto.name,extension,false,dir,(errI,locate)=>{
+                                        if(!errI){
+                                            fs.unlinkSync(`${__dirname}/funciones/img/${foto.name}`)
+                                            res.redirect('/');
+                                        }
+                                        user.imagen = extension;
+                                        user.save(()=>{
+                                        res.render('user',{img:[`./img/${extension}`,`./img/2${extension}`],'info':info,'authorised':true})   
                                     })
+                                    })
+                                    
                                 });
                                 
                             }) 
@@ -72,8 +79,7 @@ app.post('/login',(req,res)=>{
                             res.redirect('/');
                         }
                     }else{
-                        let info = `hola ${user.name} descargue la foto y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
-                        res.render('user',{img:`./img/${user.imagen}`,'info':info,'authorised':true})
+                        res.render('user',{img:[`./img/${extension}`,`./img/2${extension}`],'info':info,'authorised':true})
                     }
                 }else{
                     let info = `hola ${user.name} lo siento todavia usted no esta verificado porfavor hablar con @0Aliadorni `
@@ -89,7 +95,7 @@ app.post('/login',(req,res)=>{
 })
 app.post('/verificacion/admin',(req,res)=>{
     let {dni, user, seg}= req.body;
-    User.findOne({'dni':dni,'username':user,'seguimiento':seg},(err,user)=>{
+    User.findOne({'dni':dni,'username':user,'seguimiento':seg,'admin':true},(err,user)=>{
         if(err) throw err;
         console.log(user);
         if(null !== user){
@@ -171,7 +177,7 @@ app.listen(app.get('port'), function() {
 });
 const hola = ()=>{
     let sum=0;
-    User.find((err, user)=>{
+    /*User.find((err, user)=>{
         user.forEach(({imagen})=>{
             if(imagen != 'hholas' ){
                 sum++;
@@ -179,10 +185,10 @@ const hola = ()=>{
             }
         })
         console.log(sum)
-    });
+    });*/
     /*User.updateMany(
         {}, 
-        {imagen : 'hholas' },
+        {'verificado':false},
         {multi:true},function(err, numberAffected){
         });*/
 }
