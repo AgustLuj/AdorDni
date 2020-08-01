@@ -25,10 +25,10 @@ app.set('port', (process.env.PORT || 80));
 app.set("view engine","jade");
 
 app.get("/",(req,res) =>{
-	res.render("index");
+	res.render("index",{err:true});
 });
 app.get('/login',(req,res)=>{
-    res.render("login");
+    res.render("login",);
 })
 app.get('/signup',(req,res)=>{
     res.render("signup");
@@ -40,7 +40,7 @@ app.post('/login',(req,res)=>{
     let {dni,username} = req.body
     if(dni !== null){
         User.findOne({'dni':dni,'username':username},(err,user)=>{
-            if(err)console.log(err);
+            if(err) res.render("login",{err:true});
             try{
                 if(user.verificado){
                     let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni`;
@@ -84,8 +84,8 @@ app.post('/login',(req,res)=>{
                     res.render('user',{'info':info,'authorised':false})
                 }
             }catch{
-                console.log(user)
-                res.redirect('/')
+                //console.log(user)
+                res.render("login",{err:true});
             }
         })
     }
