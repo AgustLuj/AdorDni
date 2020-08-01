@@ -38,17 +38,17 @@ app.get('/verificacion/admin',(req,res)=>{
 })
 app.post('/login',(req,res)=>{
     let {dni,username} = req.body
-    //console.log(req.files['archivo']);
-    if(dni != null){
+    if(dni !== null){
         User.findOne({'dni':dni,'username':username},(err,user)=>{
+            if(err)console.log(err);
             try{
                 if(user.verificado){
-                    let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni,`
+                    let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni`;
+                    let extension = `${user.username}${user.dni}.png`
                     if(user.imagen === 'hholas' || null !== req.files){
                         try{
                             let foto = req.files['archivo']
                             //console.log(req.files['archivo'])
-                            let extension = `${user.username}${user.dni}.png`
                             foto.mv(`${__dirname}/funciones/img/${foto.name}`,err => {
                                 if(err){
                                     console.log('fallo?')
@@ -70,9 +70,7 @@ app.post('/login',(req,res)=>{
                                         res.render('user',{img:[`./img/${extension}`,`./img/2${extension}`],'info':info,'authorised':true})   
                                     })
                                     })
-                                    
                                 });
-                                
                             }) 
                         }catch{
                             console.log('Fallo?')
@@ -86,7 +84,6 @@ app.post('/login',(req,res)=>{
                     res.render('user',{'info':info,'authorised':false})
                 }
             }catch{
-                console.log(err)
                 console.log(user)
                 res.redirect('/')
             }

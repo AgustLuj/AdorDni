@@ -55,9 +55,9 @@ User.findOne({'dni':`${dni}`},(err, user)=> {
             let a  = user.dni.toString();
             if(a.length ===6){
                 b = `${a.slice(0,3)}.${a.slice(3,6)}`;
-                (d)?loadedImage.print(font2, 770, 180,b)
+                (d)?loadedImage.print(font2, 770, 170,b)
                         .write(`${dir}${locate}`):
-                    loadedImage.print(font2, 770, 180,b) 
+                    loadedImage.print(font2, 770, 170,b) 
                         .write(`${dir}2${locate}`);
             }
             if(a.length>6){
@@ -66,9 +66,9 @@ User.findOne({'dni':`${dni}`},(err, user)=> {
                 b=`${b[0]}.${b[1]}.${b[2]}`;
                 b=b.split('').reverse().join('');
                 
-                (d)?loadedImage.print(font2, 770, 180,b) 
+                (d)?loadedImage.print(font2, 770, 170,b) 
                         .write(`${dir}${locate}`):
-                    loadedImage.print(font2, 770, 180,b) 
+                    loadedImage.print(font2, 770, 170,b) 
                         .write(`${dir}2${locate}`); 
             }
         });
