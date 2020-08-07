@@ -1,3 +1,10 @@
+if Yver
+	p El usuario ya estaba verificado
+if Aver
+	p El usuario se Verifico correctamente
+if Nver
+	p El usuario no puedo ser verificado contactar con impresora
+
 form(action="/verificacion/admin/dni",method="POST" enctype="multipart/form-data") 	
 	div(id="dni")
 		label(for="dni") DNI:  
