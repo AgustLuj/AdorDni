@@ -18,9 +18,9 @@ User.findOne({'dni':`${dni}`},(err, user)=> {
                 .write(`${dir}${locate}`):
             loadedImage.print(font, 490, 290, user.name.toString().toUpperCase()) 
                 .write(`${dir}2${locate}`);        
-        (d)?loadedImage.print(font, 490, 405, user.username.toString().toUpperCase()) 
+        (d)?loadedImage.print(font, 490, 405, user.username.toString()) 
                 .write(`${dir}${locate}`):
-            loadedImage.print(font, 490, 405, user.username.toString().toUpperCase()) 
+            loadedImage.print(font, 490, 405, user.username.toString()) 
                 .write(`${dir}2${locate}`); 
         (d)?loadedImage.print(font, 490, 515, user.genero.toString().toUpperCase()) 
                 .write(`${dir}${locate}`):

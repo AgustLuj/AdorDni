@@ -177,22 +177,19 @@ app.listen(app.get('port'), function() {
 });
 const hola = ()=>{
     let sum=0;
-    User.find((err, user)=>{
-
-        user.forEach((user)=>{
+    User.find((err, users)=>{
+        
+        /*users.forEach((user)=>{
+            if(user.name.search('@') != -1){
+                console.log(user);
+            }
             
             /*if(imagen != 'hholas' ){
                 sum++;
                 
-            }*/
-            if(user.dni == 111239){
-                user.dni = new Number(user.dni)
-                user.save(()=>{
-                    console.log('encontrado')
-                })
-                
             }
-        })
+          
+        })*/
         //console.log(user[400])
     });
     /*User.updateMany(
@@ -201,7 +198,7 @@ const hola = ()=>{
         {multi:true},function(err, numberAffected){
         });*/
 }
-//hola();
+hola();
 //Simagen();
 //Hola
 //Save()
