@@ -5,8 +5,8 @@ const User = require('../models/users.js').User;
 /*const result = excelToJson({
     sourceFile:  __dirname+'/Ador.xlsx'
 });
-/*const Save = ()=>{
-    /*result['Hoja3'].forEach(({B,D,C,F,G,E},i) => {
+const Save = ()=>{
+    result['Hoja4'].forEach(({B,D,C,F,G,E},i) => {
         if(i!=0){
             let pos =C.indexOf('@')
             let O,adorni,Decano,Oso,Masutti,humano;
@@ -48,10 +48,11 @@ const User = require('../models/users.js').User;
             user.save(function (err) {
                 if(err){
                     console.log(String(err));
-                }	
+                }
+                console.log('ok')
             })
         }
-    });*/
+    });
     /*User.find((err, user)=> {
         if (err) return console.error(err);
         user.forEach(e=>{
@@ -64,6 +65,7 @@ const User = require('../models/users.js').User;
             }
         })       
       });
+
 }
 */
 /*const Save = ()=>{
@@ -84,7 +86,7 @@ const User = require('../models/users.js').User;
             });
         }
     });
-}
+}*//*
 module.exports= {
     Save
 }*/

@@ -14,17 +14,17 @@ User.findOne({'dni':`${dni}`},(err, user)=> {
             return Jimp.loadFont(Jimp.FONT_SANS_32_BLACK); 
     }) 
     .then(function (font) {
-        (d)?loadedImage.print(font, 490, 290, user.name.toString()) 
+        (d)?loadedImage.print(font, 490, 290, user.name.toString().toUpperCase()) 
                 .write(`${dir}${locate}`):
-            loadedImage.print(font, 490, 290, user.name.toString()) 
+            loadedImage.print(font, 490, 290, user.name.toString().toUpperCase()) 
                 .write(`${dir}2${locate}`);        
-        (d)?loadedImage.print(font, 490, 405, user.username.toString()) 
+        (d)?loadedImage.print(font, 490, 405, user.username.toString().toUpperCase()) 
                 .write(`${dir}${locate}`):
-            loadedImage.print(font, 490, 405, user.username.toString()) 
+            loadedImage.print(font, 490, 405, user.username.toString().toUpperCase()) 
                 .write(`${dir}2${locate}`); 
-        (d)?loadedImage.print(font, 490, 515, user.genero.toString()) 
+        (d)?loadedImage.print(font, 490, 515, user.genero.toString().toUpperCase()) 
                 .write(`${dir}${locate}`):
-            loadedImage.print(font, 490, 515, user.genero.toString()) 
+            loadedImage.print(font, 490, 515, user.genero.toString().toUpperCase()) 
                 .write(`${dir}2${locate}`);
     }).then(function (font) {
         if(d){
