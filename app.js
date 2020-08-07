@@ -38,11 +38,12 @@ app.get('/verificacion/admin',(req,res)=>{
 })
 app.post('/login',(req,res)=>{
     let {dni,username} = req.body
-    if(dni !== null){
+    dni = Number(dni);
+    if(dni !== null && username !== null ){
         User.findOne({'dni':dni,'username':username},(err,user)=>{
             if(err) res.render("login",{err:true});
             try{
-                if(user.verificado){
+                if(user.verificado){    
                     let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni`;
                     let extension = `${user.username}${user.dni}.png`
                     if(user.imagen === 'hholas' || null !== req.files){
@@ -84,10 +85,12 @@ app.post('/login',(req,res)=>{
                     res.render('user',{'info':info,'authorised':false})
                 }
             }catch{
-                //console.log(user)
+                console.log('Hola')
                 res.render("login",{err:true});
             }
         })
+    }else{
+        console.log('hola?');
     }
 })
 app.post('/verificacion/admin',(req,res)=>{
@@ -119,17 +122,17 @@ app.post('/verificacion/admin/dni',(req,res)=>{
                 if(!user.verificado){
                     user.verificado = true;
                     user.save(()=>{
-                        console.log('okey')
+                        //console.log('okey')
+                        res.render('userVer',{'Aver':true})
                         req.session.destroy()
-                        res.write('ok')
                         
                     })
                 }else{
-                    res.redirect('/verificacion/admin')
+                    res.render('userVer',{'Yver':true})
                     req.session.destroy()
                 }
             }else{
-                res.redirect('/verificacion/admin')
+                res.render('userVer',{'Nver':true})
                 req.session.destroy()
             }
         })
@@ -174,15 +177,24 @@ app.listen(app.get('port'), function() {
 });
 const hola = ()=>{
     let sum=0;
-    /*User.find((err, user)=>{
-        user.forEach(({imagen})=>{
-            if(imagen != 'hholas' ){
+    User.find((err, user)=>{
+
+        user.forEach((user)=>{
+            
+            /*if(imagen != 'hholas' ){
                 sum++;
+                
+            }*/
+            if(user.dni == 111239){
+                user.dni = new Number(user.dni)
+                user.save(()=>{
+                    console.log('encontrado')
+                })
                 
             }
         })
-        console.log(sum)
-    });*/
+        //console.log(user[400])
+    });
     /*User.updateMany(
         {}, 
         {'verificado':false},
