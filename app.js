@@ -120,7 +120,6 @@ app.post('/verificacion/admin/dni',(req,res)=>{
                     user.save(()=>{
                         //console.log('okey')
                         res.render('userVer',{'Aver':true})
-                        req.session.destroy()
                         
                     })
                 }else{
