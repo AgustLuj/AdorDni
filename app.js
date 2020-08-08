@@ -124,11 +124,9 @@ app.post('/verificacion/admin/dni',(req,res)=>{
                     })
                 }else{
                     res.render('userVer',{'Yver':true})
-                    req.session.destroy()
                 }
             }else{
                 res.render('userVer',{'Nver':true})
-                req.session.destroy()
             }
         })
         /*User.findOneAndUpdate({'dni':dni},{'verificado':true},()=>{
