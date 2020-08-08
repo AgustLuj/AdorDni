@@ -1,7 +1,6 @@
 const express =  require('express');
 const fs = require("fs-extra");
 const User = require('./models/users.js').User;
-const {Save} = require('./funciones/registros.js');
 const {Simagen} = require('./funciones/imagen.js');
 const {Suser} = require('./funciones/Cusuario.js');
 const bodyParser = require('body-parser')
@@ -198,4 +197,3 @@ const hola = ()=>{
 //hola();
 //Simagen();
 //Hola
-//Save()

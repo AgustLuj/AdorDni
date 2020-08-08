@@ -3,5 +3,4 @@ config/
 *.xlsx
 *.png
 *.jpg
-
-
+registros.js
