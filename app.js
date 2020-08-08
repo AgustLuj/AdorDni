@@ -38,13 +38,15 @@ app.get('/verificacion/admin',(req,res)=>{
 })
 app.post('/login',(req,res)=>{
     let {dni,username} = req.body
-    if(dni.search('.')!= -1){
+    if(dni.search('.') != -1){
         let a= dni.indexOf('.')
-        dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length-1))
+        dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
     }
+    console.log(dni)
     if(dni !== null && username !== null && dni.length < 7){
         User.findOne({'dni':dni,'username':username},(err,user)=>{
             if(err) res.render("login",{err:true});
+            console.log(user)
             try{
                 if(user.verificado){    
                     let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni`;
