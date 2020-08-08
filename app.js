@@ -38,8 +38,11 @@ app.get('/verificacion/admin',(req,res)=>{
 })
 app.post('/login',(req,res)=>{
     let {dni,username} = req.body
-    dni = Number(dni);
-    if(dni !== null && username !== null ){
+    if(dni.search('.')!= -1){
+        let a= dni.indexOf('.')
+        dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length-1))
+    }
+    if(dni !== null && username !== null && dni.length < 7){
         User.findOne({'dni':dni,'username':username},(err,user)=>{
             if(err) res.render("login",{err:true});
             try{
@@ -100,14 +103,7 @@ app.post('/verificacion/admin',(req,res)=>{
         console.log(user);
         if(null !== user){
             req.session.admin = true;
-            User.find({'verificado':false},(err,user)=>{
-                let dnis = []
-                user.forEach((e)=>{
-                    dnis.push(e.dni);
-                })
-                //console.log(dnis)
-                res.render('userVer',{'items':dnis});
-            })
+            res.render('userVer');
         }else{
             res.render('admin');
         }
@@ -179,18 +175,21 @@ const hola = ()=>{
     let sum=0;
     User.find((err, users)=>{
         
-        /*users.forEach((user)=>{
+        users.forEach(()=>{
+            //console.log(user)
+            /*
             if(user.name.search('@') != -1){
                 console.log(user);
-            }
-            
-            /*if(imagen != 'hholas' ){
+            }*/
+            /*if(user.verificado === true){
                 sum++;
-                
-            }
+            }*/
+            /*if(user.imagen != 'hholas' ){
+                sum++;
+            }*/
           
-        })*/
-        //console.log(user[400])
+        })
+       // console.log(sum)
     });
     /*User.updateMany(
         {}, 
@@ -198,7 +197,7 @@ const hola = ()=>{
         {multi:true},function(err, numberAffected){
         });*/
 }
-hola();
+//hola();
 //Simagen();
 //Hola
 //Save()
