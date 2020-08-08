@@ -38,8 +38,8 @@ app.get('/verificacion/admin',(req,res)=>{
 })
 app.post('/login',(req,res)=>{
     let {dni,username} = req.body
-    if(dni.search('.') != -1){
-        let a= dni.indexOf('.')
+    let a= dni.indexOf('.')
+    if(a !== -1){ 
         dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
     }
     console.log(dni)
