@@ -1,11 +1,11 @@
-const User = require('./models/users.js').User;
-const {Simagen} = require('./funciones/imagen.js');
+const User = require('../models/users.js').User;
 
-const Suser = (dni,req)=>{
-    let adorni;
+const Suser = (dni,req,res)=>{
+    let adorni=[];
     let {name,username,checkbox1,checkbox2,checkbox3,checkbox4,checkbox5,otro,nac,genero}=req.body;
+    username = username.indexOf('@') !== -1 ? username.slice(1,username.length):username;
     if(checkbox1 === 'on'){
-        adorni= 'Adorni ';
+        adorni.push('Adorni');
     }
     if(nac.length === 0){
         nac ='Desconocido'
@@ -15,52 +15,46 @@ const Suser = (dni,req)=>{
     }
     
     if(checkbox2 === 'on'){
-        Decano += 'Decano ';
+        adorni.push('Decano');
     }
     if(checkbox3 === 'on'){
-        Oso += 'Oso ';
+        adorni.push('Oso');
     }
     if(checkbox4 === 'on'){
-        Masutti += 'Masutti ';
+        adorni.push('Masutti');
     }
     if(checkbox5 === 'on'){
-        humano += 'Humano ';
+        adorni.push('Humano');
     }
-    dni++
-    let foto = req.files['archivo']
-    //console.log(req.files['archivo'])
-    let extension = `${username}${dni}.png`
-    foto.mv(`${__dirname}/funciones/img/${foto.name}`,err => {
+    if(otro.length > 0){
+        adorni.push(otro);
+    }
+    dni++ 
+    adorni = (adorni.length >1)?adorni.join(', '):adorni[0];
+
+    var user = new User({        
+        name,
+        username,
+        especie:adorni,
+        dni,
+        genero:genero,
+        otro,
+        seguimiento:`${Math.floor(Math.random() * (9999 - 2000))}-${Math.floor(Math.random() * (9999 - 2000))}`,
+        imagen:'hholas',
+        nacimiento:nac.join('/'),
+        verificado:false,
+    }); 
+    user.save(function (err) {
         if(err){
-            console.log('fallo?')
-            return res.redirect('/')  
-        } 
-        let dir = `${__dirname}/public/img/`
-        var user = new User({        
-            name,
-            username,
-            especie:adorni,
-            nacimiento:nac,
-            genero:genero,
-            otro,
-            dni,
-            seguimiento:`${Math.floor(Math.random() * (9999 - 2000))}-${Math.floor(Math.random() * (9999 - 1200))}`,
-            imagen:extension
-        }); 
-        user.save(function (err) {
-            if(err){
-                console.log(String(err));
-            }
-            Simagen(dni,foto.name,extension,dir,(errI,locate)=>{
-                if(!errI){
-                    fs.unlinkSync(`${__dirname}/funciones/img/${foto.name}`)
-                    res.redirect('/');
-                }
-                let info = `hola ${user.name} su numero de DNI es ${user.dni}`
-                res.render("user.jade",{img:`./img/${user.imagen}`,'info':info}); 
-            }) 	
-        }) 
-    });
+            let info = `Hola ${name} hubo un error al ingresar los datos a la base de datos porfavor comunicate con @impresoradorni`;
+            res.render("user.jade",{'info':info}); 
+        }
+        let info = `Porfavor comunicate con @caarpinchorni para la verificacion y para acceder a tu carnet correspondiente.`
+        res.render("user.jade",{'info':info,'registro':true,'datos':[user.name,user.username,user.dni,user.seguimiento]});  
+    })
+    //console.log(user)
+    /*let info = `Porfavor comunicate con @caarpinchorni para la verificacion y para acceder a tu carnet correspondiente.`
+    res.render("user.jade",{'info':info,'registro':true,'datos':[name,username,dni,1250]});*/
 }
 module.exports = {
     Suser

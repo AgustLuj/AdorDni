@@ -4,15 +4,11 @@ block contenido
 		form(action="/users",method="POST" enctype="multipart/form-data")
 			div(id="name")
 				label(for="Name") Nombre de la cuenta: 
-				input(type="text",name="name",placeholder="Name",class="form-control")
+				input(type="text",name="name",placeholder="Name",class="form-control" required )
 			br
 			div(id="Username")
 				label(for="Username") Usuario de la cuenta: 
-				input(type="text",name="username",placeholder="Username",class="form-control")
-			br
-			div
-				label(for="archivo") Imagen: 
-				input(type="file",name="archivo",id="archivo" class="form-control")
+				input(type="text",name="username",placeholder="Username",class="form-control" required )
 			br
 			div(id="genero")
 				label(for="genero") Genero: 

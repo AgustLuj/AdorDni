@@ -1,7 +1,21 @@
 extends ./layout.jade
 block contenido
-    h1 #{info}
+    
+    if registro
+        h1 #{info}
+        br
+        br
+        h4 Datos Personales, no COMPARTIR SEGUIMIENTO
+        br
+        h5 Nombre: #{datos[0]}
+        br
+        h5 Username: #{datos[1]}
+        br
+        h5 Dni: #{datos[2]}
+        br
+        h5 Seguimiento: #{datos[3]}
     if authorised
+        h1 #{info}
         h3 Hay dos fotos una que podes subir y otra no
         br
         br

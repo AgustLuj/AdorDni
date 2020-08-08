@@ -3,7 +3,7 @@ const fs = require("fs-extra");
 const User = require('./models/users.js').User;
 const {Save} = require('./funciones/registros.js');
 const {Simagen} = require('./funciones/imagen.js');
-const {Suser} = require('./funciones/imagen.js');
+const {Suser} = require('./funciones/Cusuario.js');
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const session = require('express-session')
@@ -42,7 +42,6 @@ app.post('/login',(req,res)=>{
     if(a !== -1){ 
         dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
     }
-    console.log(dni)
     if(dni !== null && username !== null && dni.length < 7){
         User.findOne({'dni':dni,'username':username},(err,user)=>{
             if(err) res.render("login",{err:true});
@@ -149,18 +148,18 @@ app.post('/users',(req,res)=>{
     let a = false
     let {username}=req.body;
 
-    User.find().sort("dni").exec(function(err, articles) {
+    User.find().sort("dni").exec(function(err, usera) {
         if(err){
             console.log(String(err));
         }
-        if(username == articles.username){
+        if(username == usera.username){
             a=true;
         }
     })
     if(!a){
         User.find((err,user)=>{
             if(err) res.redirect('/');
-            Suser(user[user.length-1].dni,req)
+            Suser(user[user.length-1].dni,req,res)
         })
     }
 })
