@@ -31,7 +31,11 @@ const Suser = (dni,req,res)=>{
     }
     dni++ 
     adorni = (adorni.length >1)?adorni.join(', '):adorni[0];
-
+    try{
+        nac = nac.join('/')
+    }catch{
+        nac ='Desconocido'
+    }
     var user = new User({        
         name,
         username,
@@ -41,7 +45,7 @@ const Suser = (dni,req,res)=>{
         otro,
         seguimiento:`${Math.floor(Math.random() * (9999 - 2000))}-${Math.floor(Math.random() * (9999 - 2000))}`,
         imagen:'hholas',
-        nacimiento:nac.join('/'),
+        nacimiento:nac,
         verificado:false,
     }); 
     user.save(function (err) {
