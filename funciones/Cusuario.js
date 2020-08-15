@@ -20,6 +20,9 @@ const Suser = (dni,req,res)=>{
     if(checkbox3 === 'on'){
         adorni.push('Oso');
     }
+    if(checkbox6 === 'on'){
+        adorni.push('Espert');
+    }
     if(checkbox4 === 'on'){
         adorni.push('Masutti');
     }
