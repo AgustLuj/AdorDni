@@ -44,7 +44,7 @@ app.post('/login',(req,res)=>{
     if(dni !== null && username !== null && dni.length < 7){
         User.findOne({'dni':dni,'username':username},(err,user)=>{
             if(err) res.render("login",{err:true});
-            console.log(user)
+            //console.log(user)
             try{
                 if(user.verificado){    
                     let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni`;
@@ -87,13 +87,14 @@ app.post('/login',(req,res)=>{
                     let info = `hola ${user.name} lo siento todavia usted no esta verificado porfavor hablar con @0Aliadorni `
                     res.render('user',{'info':info,'authorised':false})
                 }
-            }catch{
-                console.log('Hola')
+            }catch(err){
+                console.log('Error Try al ingresar',err)
                 res.render("login",{err:true});
             }
         })
     }else{
-        console.log('hola?');
+        console.log('Error try mal los datos',dni,username);
+        res.render("login",{err:true});
     }
 })
 app.post('/verificacion/admin',(req,res)=>{
