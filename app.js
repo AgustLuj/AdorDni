@@ -55,8 +55,8 @@ app.post('/login',(req,res)=>{
                             //console.log(req.files['archivo'])
                             foto.mv(`${__dirname}/funciones/img/${foto.name}`,err => {
                                 if(err){
-                                    console.log('fallo?')
-                                    return res.redirect('/')  
+                                    console.log('fallo la subida de la foto')
+                                    return res.render("login",{err:true}); 
                                 } 
                                 let dir = `${__dirname}/public/img/`
                                 Simagen(dni,foto.name,extension,true,dir,(errI,locate)=>{
@@ -77,8 +77,8 @@ app.post('/login',(req,res)=>{
                                 });
                             }) 
                         }catch{
-                            console.log('Fallo?')
-                            res.redirect('/');
+                            console.log('Foto no ingresada')
+                            res.render("login",{err:true});
                         }
                     }else{
                         res.render('user',{img:[`./img/${extension}`,`./img/2${extension}`],'info':info,'authorised':true})
@@ -113,9 +113,9 @@ app.post('/verificacion/admin',(req,res)=>{
 app.post('/verificacion/admin/dni',(req,res)=>{
     if(req.session.admin){
         let {dni}= req.body;
-        console.log(req.body)
         User.findOne({'dni':dni},(err,user)=>{
             if(null !== user){
+                console.log('Numero verificado',req.body)
                 if(!user.verificado){
                     user.verificado = true;
                     user.save(()=>{
