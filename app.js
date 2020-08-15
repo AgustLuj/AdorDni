@@ -113,6 +113,10 @@ app.post('/verificacion/admin',(req,res)=>{
 app.post('/verificacion/admin/dni',(req,res)=>{
     if(req.session.admin){
         let {dni}= req.body;
+        let a= dni.indexOf('.')
+        if(a !== -1){ 
+            dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
+        }
         User.findOne({'dni':dni},(err,user)=>{
             if(null !== user){
                 console.log('Numero verificado',req.body)
@@ -171,23 +175,57 @@ app.listen(app.get('port'), function() {
 });
 const hola = ()=>{
     let sum=0;
+    let usuario = [];
+    let fotoUsert=[]
+
+    /*let Ndni=111543;
+    for (let i = 0; i < 46; i++) {
+        Ndni++;
+        /*User.find({'dni':Ndni},(err, users)=>{
+            if(err) throw err
+            users.forEach(({dni})=>{
+                try{
+                    console.log('existe',dni);
+                    
+                }catch(err){
+                    console.log(Ndni)
+                }
+            });
+        });*/
+        /*User.deleteMany({'dni':Ndni},(err,a)=>{
+            if(err)throw err;
+            console.log(a);
+        })*/
+    //}
+    
     User.find((err, users)=>{
         
-        users.forEach(()=>{
+        users.forEach((user)=>{
             //console.log(user)
             /*
             if(user.name.search('@') != -1){
                 console.log(user);
             }*/
             /*if(user.verificado === true){
+                usuario.push(user.username);
+            }*/
+            /*if(user.verificado === true){
                 sum++;
             }*/
-            /*if(user.imagen != 'hholas' ){
+            if(user.imagen != 'hholas' ){
                 sum++;
+            }
+            /*if(user.imagen != 'hholas' ){
+                fotoUsert.push(user.username);
+            }*/
+            /*if(user.imagen === 'hholas' && user.verificado === true){
+                fotoUsert.push(user.username);
             }*/
           
         })
-       // console.log(sum)
+        console.log(sum);
+        //console.log(usuario.join(', '));
+        //console.log(fotoUsert.join(', '))
     });
     /*User.updateMany(
         {}, 
@@ -195,6 +233,6 @@ const hola = ()=>{
         {multi:true},function(err, numberAffected){
         });*/
 }
-//hola();
+hola();
 //Simagen();
 //Hola
