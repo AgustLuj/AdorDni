@@ -178,7 +178,7 @@ app.get('/dolar',(req,res)=>{
         fn(data2.monedas[0].Venta);
     }
     const dolar = scrapeItExample((data)=>{
-        res.send(data)
+        res.write({data})
     });
     
 })
