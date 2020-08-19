@@ -6,6 +6,7 @@ const {Suser} = require('./funciones/Cusuario.js');
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const session = require('express-session')
+const scrapeIt = require("scrape-it");
 
 const app = express();
 
@@ -170,6 +171,15 @@ app.post('/users',(req,res)=>{
 app.post('/signup',(req,res)=>{
     res.render("signup");
 })
+app.get('/dolar',(req,res)=>{
+    async function scrapeItExample() {
+        const data = await scrapeIt('https://www.cronista.com/MercadosOnline/json/homegetPrincipal.html',);
+        data2 = JSON.parse(data.body)
+        return(data2.monedas[0].Venta);
+    }
+    dolar = scrapeItExample();
+    req.send({dolar})
+})
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
@@ -209,12 +219,12 @@ const hola = ()=>{
             /*if(user.verificado === true){
                 usuario.push(user.username);
             }*/
-            /*if(user.verificado === true){
-                sum++;
-            }*/
-            if(user.imagen != 'hholas' ){
+            if(user.verificado === true){
                 sum++;
             }
+            /*if(user.imagen != 'hholas' ){
+                sum++;
+            }*/
             /*if(user.imagen != 'hholas' ){
                 fotoUsert.push(user.username);
             }*/
