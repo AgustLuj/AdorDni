@@ -178,7 +178,7 @@ app.get('/dolar',(req,res)=>{
         return(data2.monedas[0].Venta);
     }
     dolar = scrapeItExample();
-    req.send({dolar})
+    res.send({dolar})
 })
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
