@@ -85,7 +85,7 @@ app.post('/login',(req,res)=>{
                         res.render('user',{img:[`./img/${extension}`,`./img/2${extension}`],'info':info,'authorised':true})
                     }
                 }else{
-                    let info = `hola ${user.name} lo siento todavia usted no esta verificado porfavor hablar con @0Aliadorni `
+                    let info = `hola ${user.name} lo siento todavia usted no esta verificado porfavor hablar con @caarpinchorni`
                     res.render('user',{'info':info,'authorised':false})
                 }
             }catch(err){
