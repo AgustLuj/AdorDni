@@ -25,3 +25,5 @@ block contenido
         br 
         h5 Foto Para subir a las redes
             img.className#IdName(src="#{img[1]}" alt="AdorDni")
+    if !authorised
+        h1 #{info}
