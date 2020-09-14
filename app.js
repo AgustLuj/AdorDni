@@ -7,21 +7,30 @@ const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const session = require('express-session')
 const scrapeIt = require("scrape-it");
+const mobile = require('./route/mobile.js');
 
 const app = express();
+
 
 app.use(fileUpload())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
+app.use('/users', mobile);
 
 app.use(session({
     secret: 'QueondaMaquinatodobienMealegroMucho123456789',
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        secure: true,
+        httpOnly: true,
+        domain: 'adordni.ml',
+        sameSite:'strict',
+      }
   }))
 
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 80));
 app.set("view engine","jade");
 
 app.get("/",(req,res) =>{
