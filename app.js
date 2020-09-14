@@ -30,7 +30,7 @@ app.use(session({
       }
   }))
 
-app.set('port', (process.env.PORT || 80));
+app.set('port', (process.env.PORT || 3000));
 app.set("view engine","jade");
 
 app.get("/",(req,res) =>{
