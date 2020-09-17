@@ -22,12 +22,6 @@ app.use(session({
     secret: 'QueondaMaquinatodobienMealegroMucho123456789',
     resave: false,
     saveUninitialized: true,
-    cookie: {
-        secure: true,
-        httpOnly: true,
-        domain: 'adordni.ml',
-        sameSite:'strict',
-      }
   }))
 
 app.set('port', (process.env.PORT || 3000));
@@ -114,6 +108,7 @@ app.post('/verificacion/admin',(req,res)=>{
         console.log(user);
         if(null !== user){
             req.session.admin = true;
+            console.log(req.session);
             res.render('userVer');
         }else{
             res.render('admin');
@@ -121,6 +116,7 @@ app.post('/verificacion/admin',(req,res)=>{
     })
 })
 app.post('/verificacion/admin/dni',(req,res)=>{
+    console.log(req.session);
     if(req.session.admin){
         let {dni}= req.body;
         let a= dni.indexOf('.')
