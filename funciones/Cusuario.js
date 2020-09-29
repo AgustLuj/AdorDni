@@ -1,4 +1,4 @@
-const User = require('../models/users.js').User;
+const {User} = require('../models/users.js');
 
 const Suser = (dni,req,res)=>{
     let adorni=[];

@@ -1,5 +1,5 @@
 var Jimp = require("jimp"); 
-const User = require('../models/users.js').User;
+const {User} = require('../models/users.js');
 
 var fileName = __dirname+'/NDNI.png'; 
 var loadedImage;

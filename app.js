@@ -1,6 +1,6 @@
 const express =  require('express');
 const fs = require("fs-extra");
-const User = require('./models/users.js').User;
+const {User} = require('./models/users.js');
 const {Simagen} = require('./funciones/imagen.js');
 const {Suser} = require('./funciones/Cusuario.js');
 const bodyParser = require('body-parser')
@@ -8,7 +8,7 @@ const fileUpload = require('express-fileupload')
 const session = require('express-session')
 const scrapeIt = require("scrape-it");
 const mobile = require('./route/mobile.js');
-
+const news = require('./route/news.js');
 const app = express();
 
 
@@ -17,11 +17,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
 app.use('/users', mobile);
+app.use('/news', news);
 
 app.use(session({
     secret: 'QueondaMaquinatodobienMealegroMucho123456789',
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        secure: true,
+        httpOnly: true,
+        domain: 'adordni.ml',
+        sameSite:'strict',
+      }
   }))
 
 app.set('port', (process.env.PORT || 3000));
@@ -75,7 +82,7 @@ app.post('/login',(req,res)=>{
                                         }
                                         user.imagen = extension;
                                         user.save(()=>{
-                                        res.render('user',{img:[`./img/${extension}`,`./img/2${extension}`],'info':info,'authorised':true})   
+                                            res.render('user',{img:[`./img/${extension}`,`./img/2${extension}`],'info':info,'authorised':true})   
                                     })
                                     })
                                 });
