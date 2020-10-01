@@ -5,7 +5,7 @@ const {User,News} = require('../models/users.js');
 router.get('/', function (req, res) {
     /*User.findOne({'dni':'111239'},(err,user)=>{
         let news = new News({
-            tittle:'Bienvenido',
+            title:'Bienvenido',
             text:'Gracias por utilizar esta aplicacion',
             author:user,
         })

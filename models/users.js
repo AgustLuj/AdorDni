@@ -27,7 +27,7 @@ var User = mongoose.model("Users",user_schema);
 
 
 var news_schema = new Schema({
-    tittle:{type:String,maxlength:[50,"Titulo muy grande"]},
+    title:{type:String,maxlength:[50,"Titulo muy grande"]},
     text:{type:String,maxlength:[255,"Texto muy grande"]},
     author:user_schema,
     Date:{ type: Date, default: Date.now },
