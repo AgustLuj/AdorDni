@@ -49,6 +49,11 @@ User.findOne({'dni':`${dni}`},(err, user)=> {
                     loadedImage.print(font2, 259, 640, user.seguimiento.toString())
                                .write(`${dir}${locate}`);
                 })  
+            }else{
+                Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font2 => {
+                    loadedImage.print(font2, 259, 640, 'Verificado')
+                               .write(`${dir}${locate}`);
+                }) 
             }
     }).then(function (font) { 
         Jimp.loadFont(Jimp.FONT_SANS_128_BLACK).then(font2 => {

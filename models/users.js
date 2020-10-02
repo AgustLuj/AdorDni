@@ -35,10 +35,7 @@ var news_schema = new Schema({
 });
 news_schema.set('toJSON', {
     transform: function(doc, ret, opt) {
-        delete ret['author'].nacimiento;
-        delete ret['author'].genero;
-        delete ret['author'].especie;
-        delete ret['author'].imagen;
+        
         return ret
     }
 })
