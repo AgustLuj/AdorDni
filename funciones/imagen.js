@@ -52,7 +52,7 @@ User.findOne({'dni':`${dni}`},(err, user)=> {
             }
         });
     }).then(function (font) {             
-        Jimp.read(`${__dirname}/agregado.png`, function (err, images) {
+        Jimp.read(`${__dirname}/orginal-adorni.jpg`, function (err, images) {
                     images.opacity(.20);
                     loadedImage.composite( images, 0, 0 )
                             .write(`${dir}${locate}`)
