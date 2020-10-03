@@ -75,7 +75,7 @@ app.post('/login',(req,res)=>{
                                     res.redirect('/');
                                 }
                                 user.imgP=foto.name;
-                                //user.imagen = extension;
+                                user.imagen = extension;
                                 user.save(()=>{
                                     res.render('user',{img:`./img/${extension}`,'info':info,'authorised':true,seg:user.seguimiento})   
                                 })
