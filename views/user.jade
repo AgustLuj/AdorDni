@@ -16,14 +16,15 @@ block contenido
         h5 Seguimiento: #{datos[3]}
     if authorised
         h1 #{info}
-        h3 Hay dos fotos una que podes subir y otra no
         br
+        h4 Datos Personales, no COMPARTIR SEGUIMIENTO
         br
-        h5 Foto Principal (No Publicar Seguimiento == Password)
-            img.className#IdName(src="#{img[0]}" alt="AdorDni")
+        h3 Constraseña: #{seg}
+        br
+        h5 Foto Principal
+        br
+        img.className#IdName(src="#{img}" alt="AdorDni")
         br
         br 
-        h5 Foto Para subir a las redes
-            img.className#IdName(src="#{img[1]}" alt="AdorDni")
     if !authorised
         h1 #{info}

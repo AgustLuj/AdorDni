@@ -2,30 +2,35 @@ extends ./layout.jade
 block contenido
 	if err
 		h1(style="color:red") Username o Dni invalido
-	h1 Bienvenido
-	h5 Por favor ingrese su AdorDni sin punto BIEN: (100000) MAl: (100.000)
-	h5 Por favor ingrese su username sin @ BIEN: (xxxxxx) MAl: (@xxxx)
-	h5 La foto tiene que la del perfil de twitter
-	div(class="col-md-6 remove-float center-block big-top-space")
-		form(action="/login",method="POST" enctype="multipart/form-data") 	
-			div(id="dni")
-				label(for="dni") DNI
-				input(type="text",name="dni",placeholder="DNI",class="form-control")
-			br
-			div(id="username")
-				label(for="username") Username
-				input(type="text",name="username",placeholder="username",class="form-control")
-			br
-			div
-				label(for="archivo") Imagen
-				input(type="file",name="archivo",id="archivo" class="form-control")
-			br
-			//div(id="password")
-				label(for="email") Numero de proceso
-				input(type="text",name="Proceso",placeholder="Proceso",class="form-control")
-			div(class="row top-space")
+	div(class="container")
+		div(class="header")
+			h1 Bienvenido
+			h5 
+				li El DNI debe ser sin puntos. ej: 100000
+			h5 
+				li El DNI con puntos no sera valido. ej: 100.000
+			h5 
+				li La foto de perfil debe ser la misma que la de twitter.
+		div(class="register")
+			form(action="/login",method="POST" enctype="multipart/form-data") 	
+				div(id="dni")
+					label(for="dni") DNI:
+					input(type="text",name="dni",placeholder="DNI",class="form-control-dni")
 				br
-				div(class="col-xs-12 col-sm-6")
-					input(type="submit",value="Enviar",class="btn btn-info")
-				div(class="col-xs-12 col-sm-6 text-right")
-					//a(href="/signup") No tengo cuenta
+				div(id="imagen")
+					label(for="archivo") Imagen (Foto de Perfil):
+					input(type="file",name="archivo",id="archivo" class="form-control")
+				br
+				div(id="dni")
+					label(for="username") Username
+					input(type="text",name="username",placeholder="username",class="form-control-dni")
+				br
+				//div(id="password")
+					label(for="email") Numero de proceso
+					input(type="text",name="Proceso",placeholder="Proceso",class="form-control")
+				div(id="boton")
+					br
+					div
+						input(type="submit" value="Enviar" id="button")
+					div(class="no-register")
+						//a(href="/signup") No tengo cuenta

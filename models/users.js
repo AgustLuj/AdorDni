@@ -13,6 +13,7 @@ var user_schema = new Schema({
     genero:{type:String,maxlength:[50,"Username muy grande"]},
     seguimiento:{type:String,maxlength:[50,"Username muy grande"]},
     imagen:{type:String,maxlength:[50,"Username muy grande"]},
+    imgP:{type:String,maxlength:[50,"Username muy grande"]},
     nacimiento:{type:String,maxlength:[50,"Username muy grande"]},
     verificado:{type:Boolean,default:false},
     admin:{type:Boolean,default:false},
