@@ -16,6 +16,21 @@ router.get('/', function (req, res) {
             title:'Bienvenido',
             text:'Gracias por utilizar esta aplicacion',
             author:newUser,
+            type:1,
+            options:{
+                candidates:[{
+                    text:'Impresora',
+                    vote:1.5
+                },{
+                    text:'General',
+                },{
+                    text:'El che',
+                },{
+                    text:'Carpincho',
+                },{
+                    text:'Heladorni',
+                },]
+            }
         })
         news.save((err)=>{
             console.log(news);

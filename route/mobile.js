@@ -5,34 +5,91 @@ const {User} = require('../models/users.js');
 router.get('/', function (req, res) {   
     res.status(200).send({'anda':'true'});
 })
-
-
+router.post('/getData', function (req, res) {
+    try{
+        let {dni}=req.body;
+        console.log(dni,seg)
+        let regex =/./;
+        let a= regex.test(dni)
+        if(a){ 
+            dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
+        }
+        
+        if(dni !== null  && dni.length < 7){
+            User.findOne({'dni':dni},(err,user)=>{
+                if(null === user){
+                    res.status(400).send({'err':true});  
+                }else{
+                    console.log(user)
+                    let {username,_id,name,dni,verificado,admin} = user
+                    let newUser={
+                        _id,
+                        username,
+                        name,
+                        dni,
+                        verificado,
+                        admin,
+                    }
+                    res.status(200).send({newUser});  
+                }
+            });
+        }
+    }catch{
+        res.status(400).send({'err':true});
+    }
+    
+    //res.status(200).send({'example':'hola'});
+});
 router.post('/ingresar', function (req, res) {
-    let {dni,seg}=req.body;
-
-    let a= dni.indexOf('.')
-    if(a !== -1){ 
-        dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
+    try{
+        let {dni,seg}=req.body;
+        console.log(dni,seg)
+        let regex =/./;
+        let a= regex.test(dni)
+        if(a){ 
+            dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
+        }
+        
+        if(dni !== null && seg !== null && dni.length < 7){
+            User.findOne({'dni':dni,'seguimiento':seg},(err,user)=>{
+                if(null === user){
+                    res.status(400).send({'err':true});  
+                }else{
+                    console.log(user)
+                    res.status(200).send({user});  
+                }
+            });
+        }
+    }catch{
+        res.status(400).send({'err':true});
     }
-    if(dni == 1 && seg == 1){
-        User.findOne({'dni':'111239','seguimiento':'3214-8750'},(err,user)=>{
-            if(null === user){
-                res.status(400).send({'err':'Codigo Incorrecto'});  
-            }else{
-                res.status(200).send({user});  
-            }
-        });
+    
+    //res.status(200).send({'example':'hola'});
+});
+router.post('/ingresar', function (req, res) {
+    try{
+        let {dni,seg}=req.body;
+        console.log(dni,seg)
+        let regex =/./;
+        let a= regex.test(dni)
+        if(a){ 
+            dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
+        }
+        
+        if(dni !== null && seg !== null && dni.length < 7){
+            User.findOne({'dni':dni,'seguimiento':seg},(err,user)=>{
+                if(null === user){
+                    res.status(400).send({'err':true});  
+                }else{
+                    console.log(user)
+                    res.status(200).send({user});  
+                }
+            });
+        }
+    }catch{
+        res.status(400).send({'err':true});
     }
-    if(dni !== null && seg !== null && dni.length < 7){
-        User.findOne({'dni':dni,'seguimiento':seg},(err,user)=>{
-            if(null === user){
-                res.status(400).send({'err':true});  
-            }else{
-                console.log(user)
-                res.status(200).send({user});  
-            }
-        });
-    }
+    
     //res.status(200).send({'example':'hola'});
 });
 router.post('/checkPass',(req,res)=>{

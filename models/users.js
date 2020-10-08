@@ -25,13 +25,24 @@ user_schema.set('toJSON', {
     }
 })
 var User = mongoose.model("Users",user_schema);
-
+var votes_schema = new Schema({
+    text:{type:String,maxlength:[50,"Titulo muy grande"]},
+    vote:{type:Number,default:0}
+});
+var options_schema = new Schema({
+    candidates:[votes_schema],
+    votes:{type:Number,default:0},
+    porc:{type:Number,default:0}
+});
 
 var news_schema = new Schema({
     title:{type:String,maxlength:[50,"Titulo muy grande"]},
     text:{type:String,maxlength:[255,"Texto muy grande"]},
     author:user_schema,
     Date:{ type: Date, default: Date.now },
+    type:{type:Number},
+    options:options_schema,
+    likes:{type:Number,default:0}
     
 });
 news_schema.set('toJSON', {
