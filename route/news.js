@@ -20,7 +20,11 @@ router.get('/', function (req, res) {
             options:{
                 candidates:[{
                     text:'Impresora',
-                    vote:1.5
+                    vote:1.5,
+                    users:{
+                        id:_id,
+                        name:newUser.name
+                    }
                 },{
                     text:'General',
                 },{
@@ -30,7 +34,8 @@ router.get('/', function (req, res) {
                 },{
                     text:'Heladorni',
                 },]
-            }
+            },
+            
         })
         news.save((err)=>{
             console.log(news);
@@ -54,7 +59,7 @@ router.get('/allNews', function (req, res) {
         }else if(news.length<10){
             noticias=news;
         }
-        console.log(noticias.length)
+        //console.log(noticias.length)
         res.status(200).send(noticias)
     })
     

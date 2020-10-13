@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const {link} = require('../config/config.js');
 
-var Schema=mongoose.Schema;
+const Schema=mongoose.Schema;
 mongoose.set('useFindAndModify', false);
 mongoose.connect(link,{ useNewUrlParser: true,useUnifiedTopology: true });
 
-var user_schema = new Schema({
+const user_schema = new Schema({
 	name:{type:String,maxlength:[50,"Username muy grande"]},
 	username:{type:String,maxlength:[50,"Username muy grande"]},
     especie:{type:String,maxlength:[50,"Username muy grande"]},
@@ -24,18 +24,24 @@ user_schema.set('toJSON', {
         return ret
     }
 })
-var User = mongoose.model("Users",user_schema);
-var votes_schema = new Schema({
+const User = mongoose.model("Users",user_schema);
+const votes_users = new Schema({
+    id:{type:String},
+    name:{type:String},
+})
+const votes_schema = new Schema({
     text:{type:String,maxlength:[50,"Titulo muy grande"]},
-    vote:{type:Number,default:0}
+    vote:{type:Number,default:0},
+    users:[votes_users]
+    
 });
-var options_schema = new Schema({
+const options_schema = new Schema({
     candidates:[votes_schema],
     votes:{type:Number,default:0},
-    porc:{type:Number,default:0}
+    porc:{type:Number,default:0},
 });
 
-var news_schema = new Schema({
+const news_schema = new Schema({
     title:{type:String,maxlength:[50,"Titulo muy grande"]},
     text:{type:String,maxlength:[255,"Texto muy grande"]},
     author:user_schema,
@@ -51,7 +57,7 @@ news_schema.set('toJSON', {
         return ret
     }
 })
-var News = mongoose.model("News",news_schema);
+const News = mongoose.model("News",news_schema);
 
 module.exports={
     User,

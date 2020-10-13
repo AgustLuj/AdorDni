@@ -1,13 +1,13 @@
-var Jimp = require("jimp"); 
-const {User} = require('../models/users.js');
+const Jimp = require("jimp"); 
+const path = require("path"); 
 
-var fileName = __dirname+'/NDNI.png'; 
+const dir = `${path.resolve("./")}/public/img/`;
+const fileName = __dirname+'/NDNI.png'; 
 var loadedImage;
-var img;
-var numero = 0 ;
-const Simagen = ({dni,verificado},name,locate,dir,fn)=>{
-User.findOne({'dni':`${dni}`},(err, user)=> {
-    if (err) return console.error(err);
+
+
+const Simagen = (user,name,fn)=>{
+    let locate = `${user.username}${user.dni}.png`
     Jimp.read(fileName) 
         .then(function (image) { 
             loadedImage = image; 
@@ -31,7 +31,7 @@ User.findOne({'dni':`${dni}`},(err, user)=> {
         
     }).then(function (font) { 
         Jimp.loadFont(Jimp.FONT_SANS_32_BLACK).then(font2 => {
-            loadedImage.print(font2, 180, 640, (verificado?'Verificado':'No-Verificado'))
+            loadedImage.print(font2, 180, 640, (user.verificado?'Verificado':'No-Verificado'))
                         .write(`${dir}${locate}`);
         })  
     }).then(function (font) { 
@@ -63,8 +63,7 @@ User.findOne({'dni':`${dni}`},(err, user)=> {
     })
     .catch(function (err) { 
      console.error(err); 
-    });        
-  });
+    });
 }
 module.exports = {
     Simagen

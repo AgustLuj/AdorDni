@@ -58,7 +58,6 @@ app.post('/login',(req,res)=>{
             //console.log(user)
             try{   
                 let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni`;
-                let extension = `${user.username}${user.dni}.png`
                 if(user.imagen === 'hholas' || null !== req.files){
                     try{
                         let foto = req.files['archivo']
@@ -67,17 +66,16 @@ app.post('/login',(req,res)=>{
                             if(err){
                                 console.log('fallo la subida de la foto')
                                 return res.render("login",{err:true}); 
-                            } 
-                            let dir = `${__dirname}/public/img/`
-                            Simagen(user,foto.name,extension,dir,(errI,locate)=>{
+                            }
+                            Simagen(user,foto.name,(errI,locate)=>{
                                 if(!errI){
                                     fs.unlinkSync(`${__dirname}/public/img/${foto.name}`)
                                     res.redirect('/');
                                 }
                                 user.imgP=foto.name;
-                                user.imagen = extension;
+                                user.imagen = `${user.username}${user.dni}.png`;
                                 user.save(()=>{
-                                    res.render('user',{img:`./img/${extension}`,'info':info,'authorised':true,seg:user.seguimiento})   
+                                    res.render('user',{img:`./img/${user.username}${user.dni}.png`,'info':info,'authorised':true,seg:user.seguimiento})   
                                 })
                             });
                         }) 
@@ -86,7 +84,7 @@ app.post('/login',(req,res)=>{
                         res.render("login",{err:true});
                     }
                 }else{
-                    res.render('user',{img:`./img/${extension}`,'info':info,'authorised':true})
+                    res.render('user',{img:`./img/${user.username}${user.dni}.png`,'info':info,'authorised':true})
                 }
             }catch(err){
                 console.log('Error Try al ingresar',err)
