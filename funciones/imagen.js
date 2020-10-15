@@ -22,11 +22,14 @@ const Simagen = (user,name,fn)=>{
                 .write(`${dir}${locate}`);
 
     }).then(function (font) {
-        Jimp.read(`${__dirname}/img/${name}`, function (err, images) {
-                    images.resize(422, 422);
-                    loadedImage.composite( images, 45, 215 )
-                            .write(`${dir}${locate}`)
-                        
+        Jimp.read(`${dir}${name}`, function (err, images) {
+            if(err){
+                console.log(err);
+            }else{
+                images.resize(422, 422);
+                loadedImage.composite( images, 45, 215 )
+                        .write(`${dir}${locate}`)
+            }            
         })
         
     }).then(function (font) { 

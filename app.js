@@ -58,7 +58,8 @@ app.post('/login',(req,res)=>{
         User.findOne({'dni':dni,'username':username},(err,user)=>{
             if(err) res.render("login",{err:true});
             //console.log(user)
-            try{   
+            try{
+                console.log(user)
                 let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni`;
                 if(user.imagen === 'hholas' || null !== req.files){
                     try{
@@ -245,7 +246,7 @@ const hola = ()=>{
     //});
     /*User.updateMany(
         {}, 
-        {'imgP':' '},
+        {'imagen':'hholas'},
         {multi:true},function(err, numberAffected){
             console.log(numberAffected)
         });*/
