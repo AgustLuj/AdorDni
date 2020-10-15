@@ -9,6 +9,7 @@ const session = require('express-session')
 const scrapeIt = require("scrape-it");
 const mobile = require('./route/mobile.js');
 const news = require('./route/news.js');
+const votes = require('./route/votes.js');
 const app = express();
 
 
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
 app.use('/users', mobile);
 app.use('/news', news);
+app.use('/votes', votes);
 
 app.use(session({
     secret: 'QueondaMaquinatodobienMealegroMucho123456789',

@@ -30,15 +30,17 @@ const votes_users = new Schema({
     name:{type:String},
 })
 const votes_schema = new Schema({
-    text:{type:String,maxlength:[50,"Titulo muy grande"]},
+    label:{type:String,maxlength:[50,"Titulo muy grande"]},
+    value:{type:String,default:''},
     vote:{type:Number,default:0},
-    users:[votes_users]
+    porc:{type:Number,default:0},
     
 });
 const options_schema = new Schema({
     candidates:[votes_schema],
     votes:{type:Number,default:0},
-    porc:{type:Number,default:0},
+    users:[votes_users],
+    
 });
 
 const news_schema = new Schema({

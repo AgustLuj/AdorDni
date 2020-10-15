@@ -72,11 +72,13 @@ router.post('/checkPass',(req,res)=>{
         dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
     }
     if(b){
-        User.findOne({'dni':dni,'seguimiento':seg},(err,user)=>{
-            if(null === user){
+        User.exists({'dni':dni,'seguimiento':seg},(err,user)=>{
+            if(!user){
+                console.log(user)
                 res.status(400).send({'err':'Codigo Incorrecto'});  
             }else{
-               res.status(200).send({'err':true});  
+                console.log(user)
+                res.status(200).send({'err':true});  
             }
         }) 
     }else{

@@ -3,7 +3,7 @@ var router = express.Router();
 const {User,News} = require('../models/users.js');
 
 router.get('/', function (req, res) {
-    User.findOne({'dni':'111239'},(err,{username,_id,name,dni,verificado,admin})=>{
+    /*User.findOne({'dni':'111239'},(err,{username,_id,name,dni,verificado,admin})=>{
         let newUser={
             _id,
             username,
@@ -19,37 +19,33 @@ router.get('/', function (req, res) {
             type:1,
             options:{
                 candidates:[{
-                    text:'Impresora',
-                    vote:1.5,
-                    users:{
-                        id:_id,
-                        name:newUser.name
-                    }
+                    label:'Impresora',
                 },{
-                    text:'General',
+                    label:'General',
                 },{
-                    text:'El che',
+                    label:'El che',
                 },{
-                    text:'Carpincho',
+                    label:'Carpincho',
                 },{
-                    text:'Heladorni',
+                    label:'Heladorni',
                 },]
             },
             
         })
-        news.save((err)=>{
-            console.log(news);
-            res.status(200).send(news)
+        news.save((err,newa)=>{
+            console.log(newa.candidates);
+            res.status(200).send(newa)
         })
-        /*News.find((err,news)=>{
-            
-            console.log(user);
-            res.status(200).send(news)
-        })*/
+        
+    })*/
+    //5f85fa89510d152944d87322
+    //5f8615eea919d22f106ed89a
+    News.find({},(err,news)=>{
+        console.log(news);
+        res.status(200).send(news)
     })
-    
 })
-router.get('/allNews', function (req, res) {
+router.post('/allNews', function (req, res) {
     let noticias=[]
     News.find({},null,{sort: {Date: -1}},(err,news)=>{
         if(news.length>10){
@@ -64,12 +60,17 @@ router.get('/allNews', function (req, res) {
     })
     
 })
-router.get('/screenHome', function (req, res) {
+router.post('/screenHome', function (req, res) {
     let noticias=[]
     News.find({},null,{sort: {Date: -1}},(err,news)=>{
-        for (let i = 0; i < 5; i++) {
-            noticias.push(news[i]);     
+        if(news.length>=5){
+            for (let i = 0; i < 5; i++) {
+                noticias.push(news[i]);     
+            }
+        }else if(news.length<=5){
+            noticias=news;
         }
+        
         res.status(200).send(noticias)
     })
 })
