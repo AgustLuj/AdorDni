@@ -246,7 +246,7 @@ const hola = ()=>{
     //});
     /*User.updateMany(
         {}, 
-        {'imagen':'hholas'},
+        {'editor':false},
         {multi:true},function(err, numberAffected){
             console.log(numberAffected)
         });*/

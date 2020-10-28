@@ -51,8 +51,13 @@ router.post('/ingresar', function (req, res) {
                 if(null === user){
                     res.status(400).send({'err':true});  
                 }else{
-                    //console.log(user)
-                    res.status(200).send({user});  
+                    if(user.imgP === " "){
+                        res.status(400).send({'err':true,'user':false});   
+                    }else{
+                        console.log(user);
+                        res.status(200).send({user});
+                    }
+                      
                 }
             });
         }

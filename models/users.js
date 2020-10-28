@@ -17,6 +17,7 @@ const user_schema = new Schema({
     nacimiento:{type:String,maxlength:[50,"Username muy grande"]},
     verificado:{type:Boolean,default:false},
     admin:{type:Boolean,default:false},
+    editor:{type:Boolean,default:false},
 });
 user_schema.set('toJSON', {
     transform: function(doc, ret, opt) {
