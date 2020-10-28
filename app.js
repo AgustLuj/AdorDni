@@ -11,7 +11,8 @@ const mobile = require('./route/mobile.js');
 const news = require('./route/news.js');
 const votes = require('./route/votes.js');
 const app = express();
-
+var f = new Date();
+cad = f.getHours() + ":" + f.getMinutes() + ":" + f.getSeconds();
 
 app.use(fileUpload())
 app.use(bodyParser.json());
@@ -188,7 +189,7 @@ app.get('/dolar',(req,res)=>{
     
 })
 app.listen(app.get('port'), function() {
-    console.log('Node app is running on port', app.get('port'));
+    console.log('Node app is running on port', app.get('port'),cad);
 });
 const hola = ()=>{
     let sum=0;
