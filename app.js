@@ -84,14 +84,14 @@ app.post('/login',(req,res)=>{
                             });
                         }) 
                     }catch{
-                        console.log('Foto no ingresada',f)
+                        console.log('Foto no ingresada',new Date())
                         res.render("login",{err:true});
                     }
                 }else{
                     res.render('user',{img:`./img/${user.username}${user.dni}.png`,'info':info,'authorised':true})
                 }
             }catch(err){
-                console.log('Error Try al ingresar',err,f)
+                console.log('Error Try al ingresar',err,new Date())
                 res.render("login",{err:true});
             }
         })
