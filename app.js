@@ -59,7 +59,7 @@ app.post('/login',(req,res)=>{
             if(err) res.render("login",{err:true});
             //console.log(user)
             try{
-                console.log(user)
+                //console.log(user)
                 let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni`;
                 if(user.imagen === 'hholas' || null !== req.files){
                     try{
@@ -103,7 +103,7 @@ app.post('/verificacion/admin',(req,res)=>{
     let {dni, user, seg}= req.body;
     User.findOne({'dni':dni,'username':user,'seguimiento':seg,'admin':true},(err,user)=>{
         if(err) throw err;
-        console.log(user);
+        //console.log(user);
         if(null !== user){
             req.session.admin = true;
             console.log(req.session);
