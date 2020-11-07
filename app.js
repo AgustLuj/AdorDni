@@ -58,41 +58,46 @@ app.post('/login',(req,res)=>{
         User.findOne({'dni':dni,'username':username},(err,user)=>{
             if(err) res.render("login",{err:true});
             //console.log(user)
-            try{
-                //console.log(user)
-                let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni`;
-                if(user.imagen === 'hholas' || null !== req.files){
-                    try{
-                        let foto = req.files['archivo']
-                        //console.log(req.files['archivo'])
-                        foto.mv(`${__dirname}/public/img/${foto.name}`,err => {
-                            if(err){
-                                console.log('fallo la subida de la foto')
-                                return res.render("login",{err:true}); 
-                            }
-                            Simagen(user,foto.name,(errI,locate)=>{
-                                if(!errI){
-                                    fs.unlinkSync(`${__dirname}/public/img/${foto.name}`)
-                                    res.redirect('/');
+            if(user != null){
+                try{
+                    //console.log(user)
+                    let info = `hola ${user.name} porfavor descargue las fotos y subala a twitter etiquetando a @impresoradorni y a @adorDni`;
+                    if(user.imagen === 'hholas' || null !== req.files){
+                        try{
+                            let foto = req.files['archivo']
+                            //console.log(req.files['archivo'])
+                            foto.mv(`${__dirname}/public/img/${foto.name}`,err => {
+                                if(err){
+                                    console.log('fallo la subida de la foto')
+                                    return res.render("login",{err:true}); 
                                 }
-                                user.imgP=foto.name;
-                                user.imagen = `${user.username}${user.dni}.png`;
-                                user.save(()=>{
-                                    res.render('user',{img:`./img/${user.username}${user.dni}.png`,'info':info,'authorised':true,seg:user.seguimiento})   
-                                })
-                            });
-                        }) 
-                    }catch{
-                        console.log('Foto no ingresada',new Date())
-                        res.render("login",{err:true});
+                                Simagen(user,foto.name,(errI,locate)=>{
+                                    if(!errI){
+                                        fs.unlinkSync(`${__dirname}/public/img/${foto.name}`)
+                                        res.redirect('/');
+                                    }
+                                    user.imgP=foto.name;
+                                    user.imagen = `${user.username}${user.dni}.png`;
+                                    user.save(()=>{
+                                        res.render('user',{img:`./img/${user.username}${user.dni}.png`,'info':info,'authorised':true,seg:user.seguimiento})   
+                                    })
+                                });
+                            }) 
+                        }catch{
+                            console.log('Foto no ingresada',new Date())
+                            res.render("login",{err:true});
+                        }
+                    }else{
+                        res.render('user',{img:`./img/${user.username}${user.dni}.png`,'info':info,'authorised':true})
                     }
-                }else{
-                    res.render('user',{img:`./img/${user.username}${user.dni}.png`,'info':info,'authorised':true})
+                }catch(err){
+                    console.log('Error Try al ingresar',err,new Date())
+                    res.render("login",{err:true});
                 }
-            }catch(err){
-                console.log('Error Try al ingresar',err,new Date())
+            }else{
                 res.render("login",{err:true});
             }
+            
         })
     }else{
         console.log('Error try mal los datos',dni,username);
