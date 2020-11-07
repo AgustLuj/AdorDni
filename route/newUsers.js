@@ -10,7 +10,7 @@ router.post('/data', function (req, res) {
         if(user != null){
             if(user.admin){
                 NewUsers.find({},(err,NewUser)=>{
-                    console.log(NewUser);
+                    //console.log(NewUser);
                     res.status(200).send({NewUser});
                 })
                 
