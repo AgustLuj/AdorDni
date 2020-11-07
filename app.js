@@ -111,7 +111,7 @@ app.post('/verificacion/admin',(req,res)=>{
         //console.log(user);
         if(null !== user){
             req.session.admin = true;
-            console.log(req.session);
+            //console.log(req.session);
             res.render('userVer');
         }else{
             res.render('admin');
@@ -119,7 +119,7 @@ app.post('/verificacion/admin',(req,res)=>{
     })
 })
 app.post('/verificacion/admin/dni',(req,res)=>{
-    console.log(req.session);
+    //console.log(req.session);
     if(req.session.admin){
         let {dni}= req.body;
         let a= dni.indexOf('.')

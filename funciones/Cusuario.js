@@ -1,4 +1,4 @@
-const {NewUser} = require('../models/users.js');
+const {NewUsers} = require('../models/users.js');
 
 const Suser = (req,res)=>{
     let adorni=[];
@@ -42,7 +42,7 @@ const Suser = (req,res)=>{
     }catch{
         nac ='Desconocido'
     }
-    var user = new NewUser({ 
+    var user = new NewUsers({ 
         name,
         username,
         especie:adorni,
