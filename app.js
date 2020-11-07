@@ -7,9 +7,7 @@ const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const session = require('express-session')
 const scrapeIt = require("scrape-it");
-const mobile = require('./route/mobile.js');
-const news = require('./route/news.js');
-const votes = require('./route/votes.js');
+const Route = require("./route/generals");
 const app = express();
 var f = new Date();
 cad = f.getHours() + ":" + f.getMinutes() + ":" + f.getSeconds();
@@ -18,9 +16,10 @@ app.use(fileUpload())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
-app.use('/users', mobile);
-app.use('/news', news);
-app.use('/votes', votes);
+app.use('/users', Route.mobile);
+app.use('/news', Route.news);
+app.use('/votes', Route.votes);
+app.use('/newusers', Route.newUsers);
 
 app.use(session({
     secret: 'QueondaMaquinatodobienMealegroMucho123456789',
@@ -156,21 +155,7 @@ app.post('/verificacion/admin/dni',(req,res)=>{
 app.post('/users',(req,res)=>{
     let a = false
     let {username}=req.body;
-
-    User.find().sort("dni").exec(function(err, usera) {
-        if(err){
-            console.log(String(err));
-        }
-        if(username == usera.username){
-            a=true;
-        }
-    })
-    if(!a){
-        User.find((err,user)=>{
-            if(err) res.redirect('/');
-            Suser(user[user.length-1].dni,req,res)
-        })
-    }
+    Suser(req,res)
 })
 app.post('/signup',(req,res)=>{
     res.render("signup");
@@ -246,8 +231,8 @@ const hola = ()=>{
         //console.log(fotoUsert.join(', '))
     //});
     /*User.updateMany(
-        {}, 
-        {'editor':false},
+        {imagen:'hholas'}, 
+        {'imgP':''},
         {multi:true},function(err, numberAffected){
             console.log(numberAffected)
         });*/

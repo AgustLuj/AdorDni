@@ -19,6 +19,7 @@ const user_schema = new Schema({
     admin:{type:Boolean,default:false},
     editor:{type:Boolean,default:false},
 });
+
 user_schema.set('toJSON', {
     transform: function(doc, ret, opt) {
         delete ret['seguimiento']
@@ -62,7 +63,17 @@ news_schema.set('toJSON', {
 })
 const News = mongoose.model("News",news_schema);
 
+const NewUser_schema = new Schema({
+	name:{type:String,maxlength:[50,"Username muy grande"]},
+	username:{type:String,maxlength:[50,"Username muy grande"]},
+    especie:{type:String,maxlength:[50,"Username muy grande"]},
+    genero:{type:String,maxlength:[50,"Username muy grande"]},
+    nacimiento:{type:String,maxlength:[50,"Username muy grande"]},
+});
+const NewUsers = mongoose.model("NewUser",NewUser_schema);
+
 module.exports={
     User,
-    News
+    News,
+    NewUsers,
 };
