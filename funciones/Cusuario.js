@@ -2,7 +2,7 @@ const {NewUsers} = require('../models/users.js');
 
 const Suser = (req,res)=>{
     let adorni=[];
-    console.log(req.body);
+    //console.log(req.body);
     let {name,username,checkbox1,checkbox2,checkbox3,checkbox4,checkbox5,checkbox6,otro,nac,genero}=req.body;
     username = username.indexOf('@') !== -1 ? username.slice(1,username.length):username;
     if(checkbox1 === 'on'){
@@ -47,6 +47,7 @@ const Suser = (req,res)=>{
         username,
         especie:adorni,
         otro,
+        genero,
         nacimiento:nac,
     }); 
     user.save(function (err) {

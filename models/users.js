@@ -8,16 +8,17 @@ mongoose.connect(link,{ useNewUrlParser: true,useUnifiedTopology: true });
 const user_schema = new Schema({
 	name:{type:String,maxlength:[50,"Username muy grande"]},
 	username:{type:String,maxlength:[50,"Username muy grande"]},
-    especie:{type:String,maxlength:[50,"Username muy grande"]},
+    especie:{type:String,maxlength:[50,"Username muy grande"],default:"Desconocido"},
     dni:{type:String ,maxlength:[50,"Username muy grande"]},
-    genero:{type:String,maxlength:[50,"Username muy grande"]},
+    genero:{type:String,maxlength:[50,"Username muy grande"],default:"Desconocido"},
     seguimiento:{type:String,maxlength:[50,"Username muy grande"]},
-    imagen:{type:String,maxlength:[50,"Username muy grande"]},
-    imgP:{type:String,maxlength:[50,"Username muy grande"]},
-    nacimiento:{type:String,maxlength:[50,"Username muy grande"]},
+    imagen:{type:String,maxlength:[50,"Username muy grande"],default:"hhola"},
+    imgP:{type:String,maxlength:[50,"Username muy grande"],default:""},
+    nacimiento:{type:String,maxlength:[50,"Username muy grande"],default:"Desconocido"},
     verificado:{type:Boolean,default:false},
     admin:{type:Boolean,default:false},
     editor:{type:Boolean,default:false},
+    responsable:{type:String,default:"none"}
 });
 
 user_schema.set('toJSON', {
@@ -68,7 +69,9 @@ const NewUser_schema = new Schema({
 	username:{type:String,maxlength:[50,"Username muy grande"]},
     especie:{type:String,maxlength:[50,"Username muy grande"]},
     genero:{type:String,maxlength:[50,"Username muy grande"]},
-    nacimiento:{type:String,maxlength:[50,"Username muy grande"]},
+    nacimiento:{type:String,maxlength:[50,"Username muy grande"]},  
+    rejected:{type:Boolean,default:false},
+    responsable:{type:String,default:"none"}
 });
 const NewUsers = mongoose.model("NewUser",NewUser_schema);
 
