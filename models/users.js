@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {link} = require('../config/config.js');
+const {link} = require('../gConfig/config.js');
 
 const Schema=mongoose.Schema;
 mongoose.set('useFindAndModify', false);

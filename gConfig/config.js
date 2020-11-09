@@ -1,4 +1,5 @@
-const link =''
+const link ='';
+
 module.exports = {
     link
 }
