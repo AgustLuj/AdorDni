@@ -71,6 +71,7 @@ const NewUser_schema = new Schema({
     genero:{type:String,maxlength:[50,"Username muy grande"]},
     nacimiento:{type:String,maxlength:[50,"Username muy grande"]},  
     rejected:{type:Boolean,default:false},
+    acepted:{type:Boolean,default:false},
     responsable:{type:String,default:"none"}
 });
 const NewUsers = mongoose.model("NewUser",NewUser_schema);

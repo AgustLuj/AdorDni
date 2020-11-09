@@ -43,7 +43,7 @@ router.post('/userVote',(req,res)=>{
             let {options} = news
             let {candidates,users} = options;
             let i = candidates.findIndex(({_id}) => _id == idV );
-            console.log(i)
+            //console.log(i)
             if(i !== -1){
                 news.options.votes++;
                 news.options.candidates[i].vote++

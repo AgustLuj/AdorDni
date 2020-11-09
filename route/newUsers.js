@@ -9,7 +9,7 @@ router.post('/data', function (req, res) {
     User.findById({_id},(err,user)=>{
         if(user != null){
             if(user.admin){
-                NewUsers.find({rejected:false},(err,NewUser)=>{
+                NewUsers.find({rejected:false,acepted:false},(err,NewUser)=>{
                     //console.log(NewUser);
                     res.status(200).send({NewUser});
                 })
@@ -39,9 +39,38 @@ router.post('/acceptuser',async (req,res)=>{
                             responsable:user.username
                         })
                         console.log(upUser)
-                        res.status(200).send({'user':{'dni':upUser.dni,'seg':upUser.seguimiento}});
+                        newUser.acepted = true;
+                        //res.status(200).send({'user':{'dni':upUser.dni,'seg':upUser.seguimiento}});
+                        upUser.save(async (err,result)=>{
+                            if(err) throw err;
+                            await newUser.save((err, a)=>{
+                                if (err) throw err;
+                            })
+                            res.status(200).send({'user':{'dni':result.dni,'seg':result.seguimiento}});
+                        })
                     })
                     
+                }else{
+                    res.status(400).send({'err':'true'});    
+                }
+            })
+        }else{
+            res.status(400).send({'err':'true'});
+        }
+    })
+     
+})
+router.post('/rejectuser',async (req,res)=>{
+    let {_id:_id,userId:id} = req.body;
+    User.findById({_id,admin:true}, async (err,user)=>{
+        if(user !=null){
+            NewUsers.findById({'_id':id},async (err,newUser)=>{
+                if(newUser != null){
+                    newUser.rejected = true;
+                    newUser.responsable = user.username;
+                    newUser.save((err,result)=>{
+                        res.status(200).send({'user':true});
+                    })                    
                     /*await upUser.save((err,result)=>{
                         if(err) throw err;
                         res.status(200).send({'user':{'dni':result.dni,'seg':result.seguimiento}});
