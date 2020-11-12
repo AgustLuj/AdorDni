@@ -70,6 +70,7 @@ app.post('/login',(req,res)=>{
                                     console.log('fallo la subida de la foto')
                                     return res.render("login",{err:true}); 
                                 }
+                                console.log(user,foto.name);
                                 Simagen(user,foto.name,(errI,locate)=>{
                                     if(!errI){
                                         fs.unlinkSync(`${__dirname}/public/img/${foto.name}`)
