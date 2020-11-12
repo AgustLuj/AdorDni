@@ -1,6 +1,6 @@
 const express =  require('express');
 const fs = require("fs-extra");
-const {User} = require('./models/users.js');
+const {User, NewUsers} = require('./models/users.js');
 const {Simagen} = require('./funciones/imagen.js');
 const {Suser} = require('./funciones/Cusuario.js');
 const bodyParser = require('body-parser')
@@ -222,12 +222,18 @@ const hola = ()=>{
         //console.log(usuario.join(', '));
         //console.log(fotoUsert.join(', '))
     //});
-    /*User.updateMany(
-        {imagen:'hholas'}, 
-        {'imgP':''},
-        {multi:true},function(err, numberAffected){
-            console.log(numberAffected)
-        });*/
+    /*NewUsers.find({},(err,newusers)=>{
+        newusers.forEach(({username,name})=>{
+            User.updateMany(
+                {username}, 
+                {name},
+                {multi:true},function(err, numberAffected){
+                    console.log(numberAffected)
+                });
+        })
+        
+    })*/
+    
 }
 //hola();
 //Simagen();

@@ -29,7 +29,7 @@ router.post('/acceptuser',async (req,res)=>{
                 if(newUser != null){
                     await User.find({}).sort({'dni': -1}).limit(1).exec((err,lastDni)=>{
                         let upUser = new User({
-                            name:newUser.dni,
+                            name:newUser.name,
                             username:newUser.username,
                             especie:newUser.especie,
                             dni:`${Number(lastDni[0].dni)+1}`,
