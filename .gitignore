@@ -1,8 +1,9 @@
 node_modules/
-
-funciones/
+gConfig/
 *.xlsx
 *.png
 *.jpg
 registros.js
 *.pem
+*.bat
+

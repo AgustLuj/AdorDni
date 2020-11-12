@@ -6,7 +6,6 @@ const {Suser} = require('./funciones/Cusuario.js');
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const session = require('express-session')
-const scrapeIt = require("scrape-it");
 const Route = require("./route/generals");
 const app = express();
 var f = new Date();
@@ -164,19 +163,6 @@ app.post('/users',(req,res)=>{
 })
 app.post('/signup',(req,res)=>{
     res.render("signup");
-})
-app.get('/dolar',(req,res)=>{
-    async function scrapeItExample(fn) {
-        const data = await scrapeIt('https://www.cronista.com/MercadosOnline/json/homegetPrincipal.html',);
-        data2 = JSON.parse(data.body)
-        fn(data2.monedas[0].Venta);
-    }
-    const dolar = scrapeItExample((data)=>{
-        d = {'dolar':data}
-        JSON.stringify(d)
-        res.status(200).send({data});
-    });
-    
 })
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'),f);

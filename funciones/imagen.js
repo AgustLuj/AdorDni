@@ -65,7 +65,7 @@ const Simagen = (user,name,fn)=>{
         
     })
     .catch(function (err) { 
-     console.error(err); 
+     console.error(err,user); 
     });
 }
 module.exports = {
