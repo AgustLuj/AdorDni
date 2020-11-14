@@ -44,6 +44,9 @@ app.get('/login',(req,res)=>{
 app.get('/signup',(req,res)=>{
     res.render("signup");
 })
+app.get('/thanks',(req,res)=>{
+    res.render("thanks");
+})
 app.get('/verificacion/admin',(req,res)=>{
     res.render('admin');
 })
