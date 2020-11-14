@@ -37,7 +37,7 @@ router.get('/', (req, res) => {
     })
 })
 router.post('/userVote',(req,res)=>{
-    let {idV,idU}=req.body;
+    let {idV,_id:idU}=req.body;
     News.findOne({'options.candidates._id':idV},(err,news)=>{
         if(null != news){
             let {options} = news

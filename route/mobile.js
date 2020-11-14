@@ -8,36 +8,6 @@ var router = express.Router();
 router.get('/', function (req, res) {   
     res.status(200).send({'anda':'true'});
 })
-router.post('/getData', function (req, res) {
-    let {dni}=req.body;
-    let regex =/\./;
-    let a= regex.test(dni)
-    
-    if(a){ 
-        dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
-    }
-    try{
-        if(dni !== null  && dni.length < 7){
-            User.findOne({'dni':`${dni}`},(err,usea)=>{
-                if(null === usea){
-                    res.status(400).send({'err':true});  
-                }else{
-                    let {username,name,dni,verificado,admin} = usea
-                    let user={
-                        username,
-                        name,
-                        dni,
-                        verificado,
-                        admin,
-                    }
-                    res.status(200).send({user});  
-                }
-            });
-        }
-    }catch{
-        res.status(400).send({'err':true});
-    }
-});
 router.post('/ingresar', function (req, res) {
     try{
         let {dni,seg}=req.body;
@@ -68,21 +38,16 @@ router.post('/ingresar', function (req, res) {
     //res.status(200).send({'example':'hola'});
 });
 router.post('/checkPass',(req,res)=>{
-    let {dni,seg}=req.body;
-    let regexDni =/\./;
-    let regexSeg = /\-/;
-    let a= regexDni.test(dni);
+    let {_id,seg}=req.body;
+    //console.log('hola',_id,seg)
+    let regexSeg = /[0-9]*-[0-9]*/;
     let b=regexSeg.test(seg);    
-    if(a){ 
-        dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
-    }
     if(b){
-        User.exists({'dni':dni,'seguimiento':seg},(err,user)=>{
+        User.exists({_id,'seguimiento':seg},(err,user)=>{
             if(!user){
                 //console.log(user)
                 res.status(400).send({'err':'Codigo Incorrecto'});  
             }else{
-                //console.log(user)
                 res.status(200).send({'err':true});  
             }
         }) 
@@ -92,13 +57,13 @@ router.post('/checkPass',(req,res)=>{
     
 })
 router.post('/changeUser',(req,res)=>{
-    let {dni,name,usern,seg,segold}=req.body;
+    let {_id,name,usern,seg,segold}=req.body;
     let regex =/\./;
     let a= regex.test(dni)
     if(a){ 
         dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
     }
-    User.findOne({'dni':dni,'seguimiento':segold},(err,user)=>{
+    User.findById({_id,'seguimiento':segold},(err,user)=>{
         //console.log(user)
         if(null === user){
           res.status(400).send({'err':'Codigo Incorrecto'});  
@@ -131,6 +96,41 @@ router.post('/changeUser',(req,res)=>{
             
         }
     })
+})
+router.post('/search',(req,res)=>{
+    let {dni,username,_id}=req.body;
+    let datos = {
+        dni:(dni != '')?dni:null,
+        username:(username != '')?username:null,
+    }
+    try{
+        if(datos.dni === null ){
+            delete datos.dni;
+        }
+        if(datos.username === null){
+            delete datos.username;
+        }
+    }catch{
+        res.status(400).send({'err':true});
+        return null;
+    }
+    
+    User.exists({_id,'admin':true},(err,d)=>{
+        if(d){
+            User.findOne(datos,(err,user)=>{
+                if(user !=null){
+                    let {dni,name,username,verificado,editor,imagen} = user;
+                    res.status(200).send({user:{dni,name,username,verificado,editor,carnet:(imagen != 'hholas')?true:false,}});  
+                }else{
+                    res.status(400).send({'err':'Dni o Usuario mal ingresado'});          
+                }
+            })
+        }else{
+            res.status(400).send({'err':true});  
+        }
+        
+    })
+    //res.status(200).send({'err':false,datos}); 
 })
 
 
