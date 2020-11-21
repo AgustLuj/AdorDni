@@ -19,9 +19,18 @@ router.get('/', (req, res) => {
                     }
                     news.options.users.push(newUser);
                 }
-                news.save((err,result)=>{
-                    //console.log(result.options)
-                    res.status(200).send(result.options)
+                User.findOne({'_id':'5f24a4e9ac12c01e74455404'},(err,liber)=>{
+                   if(liber != null){
+                       liber.liberApp.libercoins+=5;
+                       liber.save((err,resultL)=>{
+                           news.save((err,result)=>{
+                               //console.log(result.options)
+                               res.status(200).send(result)
+                           })
+                       })
+                   }else{
+                        res.status(400).send({err:true})
+                   }
                 })
                 /*News.findOne({'options.candidates._id':'5f8615eea919d22f106ed89a'},(err,newas)=>{
                     res.status(200).send(newas.options.candidates)
@@ -54,10 +63,20 @@ router.post('/userVote',(req,res)=>{
                     }
                     news.options.users.push(newUser);
                 }
-                news.save((err,result)=>{
-                    //console.log(result.options)
-                    res.status(200).send(result)
-                })
+                User.findOne({'_id':idU},(err,liber)=>{
+                    if(liber != null){
+                        liber.liberApp.libercoins+=5;
+                        liber.save((err,resultL)=>{
+                            news.save((err,result)=>{
+                                //console.log(result.options)
+                                res.status(200).send(result)
+                            })
+                        })
+                    }else{
+                         res.status(400).send({err:true})
+                    }
+                 })
+                
                 //res.status(200).send({err:false})
                 /*News.findOne({'options.candidates._id':'5f8615eea919d22f106ed89a'},(err,newas)=>{
                     res.status(200).send(newas.options.candidates)

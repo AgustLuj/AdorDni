@@ -67,7 +67,6 @@ app.post('/login',(req,res)=>{
                     if(user.imagen === 'hholas' || null !== req.files){
                         try{
                             let foto = req.files['archivo']
-                            //console.log(req.files['archivo'])
                             foto.mv(`${__dirname}/public/img/${foto.name}`,err => {
                                 if(err){
                                     console.log('fallo la subida de la foto')
@@ -236,6 +235,12 @@ const hola = ()=>{
         })
         
     })*/
+    User.updateMany(
+        {}, 
+        {'liberApp.libercoins':0},
+        {multi:true},function(err, numberAffected){
+            console.log(numberAffected)
+        });
     
 }
 //hola();

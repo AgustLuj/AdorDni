@@ -8,6 +8,18 @@ var router = express.Router();
 router.get('/', function (req, res) {   
     res.status(200).send({'anda':'true'});
 })
+router.post('/last', function (req, res) { 
+    let {_id}=req.body;
+    let data =new Date();
+    console.log(data)
+    User.updateOne(
+        {_id}, 
+        {'liberApp.lastConexion':new Date()},
+        function(err, numberAffected){
+            console.log(numberAffected)
+            res.status(200).send({'err':false});
+        });
+})
 router.post('/ingresar', function (req, res) {
     try{
         let {dni,seg}=req.body;

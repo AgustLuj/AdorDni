@@ -5,6 +5,10 @@ const Schema=mongoose.Schema;
 mongoose.set('useFindAndModify', false);
 mongoose.connect(link,{ useNewUrlParser: true,useUnifiedTopology: true });
 
+const liberapp_schema = new Schema({
+    lastConexion:{type: Date},
+    libercoins:{type:Number,default:0},
+})
 const user_schema = new Schema({
 	name:{type:String,maxlength:[50,"Username muy grande"]},
 	username:{type:String,maxlength:[50,"Username muy grande"]},
@@ -18,16 +22,16 @@ const user_schema = new Schema({
     verificado:{type:Boolean,default:false},
     admin:{type:Boolean,default:false},
     editor:{type:Boolean,default:false},
-    responsable:{type:String,default:"none"}
+    responsable:{type:String,default:"none"},
+    liberApp:liberapp_schema
 });
-
+const User = mongoose.model("Users",user_schema);
 user_schema.set('toJSON', {
     transform: function(doc, ret, opt) {
         delete ret['seguimiento']
         return ret
     }
 })
-const User = mongoose.model("Users",user_schema);
 const votes_users = new Schema({
     id:{type:String},
     name:{type:String},

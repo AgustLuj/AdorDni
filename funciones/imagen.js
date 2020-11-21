@@ -2,13 +2,14 @@ const Jimp = require("jimp");
 const path = require("path"); 
 
 const dir = `${path.resolve("./")}/public/img/`;
-const fileName = __dirname+'/NDNI.png'; 
+const fileName = __dirname+'/NDNI.png';
+const gold =  __dirname+'/gold.png';
 var loadedImage;
 
 
 const Simagen = (user,name,fn)=>{
     let locate = `${user.username}${user.dni}.png`
-    Jimp.read(fileName) 
+    Jimp.read((user.dni === '11200')?fileName:gold) 
         .then(function (image) { 
             loadedImage = image; 
             return Jimp.loadFont(Jimp.FONT_SANS_32_BLACK); 
@@ -32,11 +33,13 @@ const Simagen = (user,name,fn)=>{
             }            
         })
         
-    }).then(function (font) { 
-        Jimp.loadFont(Jimp.FONT_SANS_32_BLACK).then(font2 => {
-            loadedImage.print(font2, 180, 640, (user.verificado?'Verificado':'No-Verificado'))
-                        .write(`${dir}${locate}`);
-        })  
+    }).then(function (font) {
+        if(user.verificado){
+            Jimp.loadFont(Jimp.FONT_SANS_32_BLACK).then(font2 => {
+                loadedImage.print(font2, 180, 640,'Verificado')
+                            .write(`${dir}${locate}`);
+            })  
+        }
     }).then(function (font) { 
         Jimp.loadFont(Jimp.FONT_SANS_128_BLACK).then(font2 => {
             let a  = user.dni.toString();
