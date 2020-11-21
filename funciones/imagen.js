@@ -9,7 +9,7 @@ var loadedImage;
 
 const Simagen = (user,name,fn)=>{
     let locate = `${user.username}${user.dni}.png`
-    Jimp.read((user.dni === '11200')?fileName:gold) 
+    Jimp.read((user.dni === '112000')?gold:fileName) 
         .then(function (image) { 
             loadedImage = image; 
             return Jimp.loadFont(Jimp.FONT_SANS_32_BLACK); 
