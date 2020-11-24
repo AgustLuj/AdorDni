@@ -5,18 +5,32 @@ var path = require("path");
 
 var router = express.Router();
 
-router.get('/', function (req, res) {   
-    res.status(200).send({'anda':'true'});
+router.get('/', function (req, res) {
+    let _id='5f24a4e9ac12c01e74455404';
+    User.findById({_id},async (err,user)=>{
+        if(user != null){
+            await Simagen(user,user.imgP,(errI,locate)=>{
+                if(!errI){
+                    fs.unlinkSync(`${__dirname}/public/img/${foto.name}`)
+                    res.redirect('/');
+                }
+            },{navidad:true});
+            res.render('user',{img:`/img/${user.username}${user.dni}Navidad.png`,'authorised':true,seg:user.seguimiento}) 
+        }else{
+            //res.status(200).send({'anda':'false'});
+        }
+    });
+    
 })
 router.post('/last', function (req, res) { 
     let {_id}=req.body;
     let data =new Date();
-    console.log(data)
+    //console.log(data)
     User.updateOne(
         {_id}, 
         {'liberApp.lastConexion':new Date()},
         function(err, numberAffected){
-            console.log(numberAffected)
+            //console.log(numberAffected)
             res.status(200).send({'err':false});
         });
 })
@@ -53,11 +67,10 @@ router.post('/checkPass',(req,res)=>{
     let {_id,seg}=req.body;
     //console.log('hola',_id,seg)
     let regexSeg = /[0-9]*-[0-9]*/;
-    let b=regexSeg.test(seg);    
+    let b=regexSeg.test(seg); 
     if(b){
         User.exists({_id,'seguimiento':seg},(err,user)=>{
             if(!user){
-                //console.log(user)
                 res.status(400).send({'err':'Codigo Incorrecto'});  
             }else{
                 res.status(200).send({'err':true});  
@@ -70,11 +83,6 @@ router.post('/checkPass',(req,res)=>{
 })
 router.post('/changeUser',(req,res)=>{
     let {_id,name,usern,seg,segold}=req.body;
-    let regex =/\./;
-    let a= regex.test(dni)
-    if(a){ 
-        dni = dni.substr(0,a).concat(dni.substr(a+1,dni.length))
-    }
     User.findById({_id,'seguimiento':segold},(err,user)=>{
         //console.log(user)
         if(null === user){

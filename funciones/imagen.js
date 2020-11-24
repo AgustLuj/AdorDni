@@ -2,14 +2,23 @@ const Jimp = require("jimp");
 const path = require("path"); 
 
 const dir = `${path.resolve("./")}/public/img/`;
-const fileName = __dirname+'/NDNI.png';
+const fileName = __dirname+'/NDNI.png';//nuevo dni
 const gold =  __dirname+'/gold.png';
+const navidad = __dirname+'/navidad/NDNI.png';
+const Navidad_gorro = __dirname+'/navidad/gorrito.png';
 var loadedImage;
 
 
-const Simagen = (user,name,fn)=>{
-    let locate = `${user.username}${user.dni}.png`
-    Jimp.read((user.dni === '112000')?gold:fileName) 
+const Simagen = (user,name,fn,options)=>{
+    let locate = `${user.username}${user.dni}.png`;
+    let imagen;
+    if(options != null && options.navidad){
+        imagen = navidad;
+        locate = `${user.username}${user.dni}Navidad.png`;
+    }else{
+        imagen= (user.dni === '112000')?gold:fileName;
+    }
+    Jimp.read(imagen) 
         .then(function (image) { 
             loadedImage = image; 
             return Jimp.loadFont(Jimp.FONT_SANS_32_BLACK); 
@@ -57,7 +66,14 @@ const Simagen = (user,name,fn)=>{
                         .write(`${dir}${locate}`)
             }
         });
-    }).then(function (font) {             
+    }).then(function (font) {      
+        if(options != null && options.navidad){
+            Jimp.read(Navidad_gorro, function (err, images) {
+                loadedImage.composite( images, 0, 0 )
+                        .write(`${dir}${locate}`)
+                fn(true,locate)
+            }) 
+        }      
         Jimp.read(`${__dirname}/agregado.png`, function (err, images) {
                     images.opacity(.20);
                     loadedImage.composite( images, 0, 0 )
