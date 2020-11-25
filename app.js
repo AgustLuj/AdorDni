@@ -67,24 +67,29 @@ app.post('/login',(req,res)=>{
                     if(user.imagen === 'hholas' || null !== req.files){
                         try{
                             let foto = req.files['archivo']
-                            foto.mv(`${__dirname}/public/img/${foto.name}`,err => {
-                                if(err){
-                                    console.log('fallo la subida de la foto')
-                                    return res.render("login",{err:true}); 
-                                }
-                                console.log(user,foto.name);
-                                Simagen(user,foto.name,(errI,locate)=>{
-                                    if(!errI){
-                                        fs.unlinkSync(`${__dirname}/public/img/${foto.name}`)
-                                        res.redirect('/');
+                            console.log(foto);
+                            if(foto.mimetype == 'image/png' || foto.mimetype == 'image/jpeg'){
+                                foto.mv(`${__dirname}/public/img/${foto.name}`,err => {
+                                    if(err){
+                                        console.log('fallo la subida de la foto')
+                                        return res.render("login",{err:true}); 
                                     }
-                                    user.imgP=foto.name;
-                                    user.imagen = `${user.username}${user.dni}.png`;
-                                    user.save(()=>{
-                                        res.render('user',{img:`./img/${user.username}${user.dni}.png`,'info':info,'authorised':true,seg:user.seguimiento})   
-                                    })
-                                });
-                            }) 
+                                    console.log(user,foto.name);
+                                    Simagen(user,foto.name,(errI,locate)=>{
+                                        if(!errI){
+                                            fs.unlinkSync(`${__dirname}/public/img/${foto.name}`)
+                                            res.redirect('/');
+                                        }
+                                        user.imgP=foto.name;
+                                        user.imagen = `${user.username}${user.dni}.png`;
+                                        user.save(()=>{
+                                            res.render('user',{img:`./img/${user.username}${user.dni}.png`,'info':info,'authorised':true,seg:user.seguimiento})   
+                                        })
+                                    });
+                                }) 
+                            }else{
+                                throw new Error("Extension incorrecta");
+                            }
                         }catch{
                             console.log('Foto no ingresada',new Date())
                             res.render("login",{err:true});
