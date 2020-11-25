@@ -36,7 +36,8 @@ router.post('/acceptuser',async (req,res)=>{
                             genero:(newUser.genero == null)?'Desconocido':newUser.genero,
                             seguimiento:`${Math.floor(Math.random() * (9999 - 3000)+1000)}-${Math.floor(Math.random() * (9999 - 3000)+1000)}`,
                             nacimiento:newUser.nacimiento,
-                            responsable:user.username
+                            responsable:user.username,
+                            liberApp:{}
                         })
                         console.log(upUser)
                         newUser.acepted = true;
