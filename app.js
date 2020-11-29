@@ -88,6 +88,8 @@ app.post('/login',(req,res)=>{
                                     });
                                 }) 
                             }else{
+                                console.log(req.ip)
+                                //fs.writeFile('message.txt', JSON.stringify(req), 'utf8');
                                 throw new Error("Extension incorrecta");
                             }
                         }catch{

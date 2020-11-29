@@ -8,6 +8,8 @@ mongoose.connect(link,{ useNewUrlParser: true,useUnifiedTopology: true });
 const liberapp_schema = new Schema({
     lastConexion:{type: Date},
     libercoins:{type:Number,default:0},
+    navidad:{type:Boolean,default:false},
+    year:{type:Boolean,default:false},
 })
 const user_schema = new Schema({
 	name:{type:String,maxlength:[50,"Username muy grande"]},
