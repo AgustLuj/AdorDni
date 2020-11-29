@@ -152,6 +152,28 @@ router.post('/search',(req,res)=>{
     })
     //res.status(200).send({'err':false,datos}); 
 })
-
+router.post('/navidad', function (req, res) {
+    let {_id}=req.body;
+    User.findById({_id,'liberapp.navidad':false},async (err,user)=>{
+        if(user != null){
+            await Simagen(user,user.imgP,(errI,locate)=>{
+                if(!errI){
+                   console.log('Error en guardar foto',user.dni,user.username);
+                   res.status(400).send({'err':'Dni o Usuario mal ingresado'});  
+                   return null;
+                }
+            },{navidad:true});
+            User.updateMany(
+                {_id}, 
+                {'liberApp.navidad':true},
+                {multi:true},function(err, numberAffected){
+                    res.status(200).send({'err':false});  
+                });
+        }else{
+            res.status(400).send({'err':'Dni o Usuario mal ingresado'});   
+        }
+    });
+    
+})
 
 module.exports = router;
