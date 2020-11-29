@@ -154,7 +154,8 @@ router.post('/search',(req,res)=>{
 })
 router.post('/navidad', function (req, res) {
     let {_id}=req.body;
-    User.findById({_id,'liberapp.navidad':false},async (err,user)=>{
+    console.log('funciona')
+    User.findById({_id,'liberApp.navidad':false},async (err,user)=>{
         if(user != null){
             await Simagen(user,user.imgP,(errI,locate)=>{
                 if(!errI){
