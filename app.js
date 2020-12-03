@@ -67,14 +67,12 @@ app.post('/login',(req,res)=>{
                     if(user.imagen === 'hholas' || null !== req.files){
                         try{
                             let foto = req.files['archivo']
-                            console.log(foto);
                             if(foto.mimetype == 'image/png' || foto.mimetype == 'image/jpeg'){
                                 foto.mv(`${__dirname}/public/img/${foto.name}`,err => {
                                     if(err){
                                         console.log('fallo la subida de la foto')
                                         return res.render("login",{err:true}); 
                                     }
-                                    console.log(user,foto.name);
                                     Simagen(user,foto.name,(errI,locate)=>{
                                         if(!errI){
                                             fs.unlinkSync(`${__dirname}/public/img/${foto.name}`)
