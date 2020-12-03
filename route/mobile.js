@@ -154,7 +154,6 @@ router.post('/search',(req,res)=>{
 })
 router.post('/navidad', function (req, res) {
     let {_id}=req.body;
-    console.log('funciona')
     User.findById({_id,'liberApp.navidad':false},async (err,user)=>{
         if(user != null){
             await Simagen(user,user.imgP,(errI,locate)=>{
@@ -164,12 +163,14 @@ router.post('/navidad', function (req, res) {
                    return null;
                 }
             },{navidad:true});
-            User.updateMany(
-                {_id}, 
-                {'liberApp.navidad':true},
-                {multi:true},function(err, numberAffected){
-                    res.status(200).send({'err':false});  
-                });
+            setTimeout(()=>{
+                User.updateMany(
+                    {_id}, 
+                    {'liberApp.navidad':true},
+                    {multi:true},function(err, numberAffected){
+                        res.status(200).send({'err':false});  
+                    });
+            },2000)
         }else{
             res.status(400).send({'err':'Dni o Usuario mal ingresado'});   
         }
