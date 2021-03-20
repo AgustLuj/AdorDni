@@ -1,4 +1,4 @@
-extends ./layout.jade
+extends ./layout.pug
 block contenido
     
     if registro
@@ -13,7 +13,7 @@ block contenido
         br
         h5 Foto Principal
         br
-        img.className#IdName(src="#{img}" alt="AdorDni")
+        img.className#IdName(src=img alt="AdorDni")
         br
         br 
     if !authorised

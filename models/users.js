@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
-const {link} = require('../gConfig/config.js');
 
 const Schema=mongoose.Schema;
-mongoose.set('useFindAndModify', false);
-mongoose.connect(link,{ useNewUrlParser: true,useUnifiedTopology: true });
 
 const liberapp_schema = new Schema({
     lastConexion:{type: Date},
