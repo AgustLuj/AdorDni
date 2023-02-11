@@ -23,7 +23,7 @@
     "jade": "^0.29.0",
     "jimp": "^0.14.0",
     "mongoose": "^5.10.13",
-    "nodemon": "^2.0.6",
+    "nodemon": "^2.0.20",
     "pug": "^3.0.2"
   },
   "devDependencies": {
